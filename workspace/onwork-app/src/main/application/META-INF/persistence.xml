@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+             xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="
+        http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+    <!-- резолв system properties в этом и других файлах обеспечивается настройкой spec-descriptor-property-replacement
+        в standalone.xml. так что можно делать так: ${jboss.server.data.dir} -->
+
+    <persistence-unit name="OnWorkPU">
+        <jta-data-source>java:jboss/datasources/OnWorkDS</jta-data-source>
+
+        <!-- теперь entity-beans разметаны по разным jar, число которых даже заранее
+            не известно (может быть установлено на этапе сборки дистриба заказчику) -->
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
+        <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+
+        <properties>
+            <!-- Properties for Hibernate -->
+            <!-- В обычой сборке поставлен несуществующий режим ignore, чтобы не тратить время на валидацию.
+                Но сама строка с настройкой нужна - по ней некоторые тесты возвращают validate или даже create-drop -->
+            <property name="hibernate.hbm2ddl.auto" value="ignore"/>
+            <property name="hibernate.default_batch_fetch_size" value="25"/>
+            <property name="hibernate.jdbc.batch_size" value="50"/>
+            <property name="hibernate.order_inserts" value="true"/>
+            <property name="hibernate.order_updates" value="true"/>
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <property name="hibernate.cache.region_prefix" value="onwork-cache-region"/>
+            <!--<property name="jboss.entity.manager.factory.jndi.name" value="java:jboss/ArgusEntityManagerFactory" />-->
+            <!--<property name="jboss.entity.manager.jndi.name" value="java:jboss/ArgusEntityManager"/>-->
+            <!--<property name="hibernate.session_factory_name" value="java:jboss/SessionFactory" />-->
+            <!-- https://docs.jboss.org/author/display/WFLY8/JPA+Reference+Guide#JPAReferenceGuide-BindingEntityManagerFactory%2FEntityManagertoJNDI -->
+            <property name="hibernate.session_factory_name_is_jndi" value="false"/>
+
+            <!--<property name="hibernate.physical_naming_strategy" value="ru.argustelecom.system.inf.dataaccess.hibernate.cfg.ArgusPhysicalNamingStrategy" />-->
+            <!--<property name="hibernate.implicit_naming_strategy" value="ru.argustelecom.system.inf.dataaccess.hibernate.cfg.ArgusImplicitNamingStrategy" />-->
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL94Dialect"/>
+            <!-- Чтобы по логу было понятно какой и почему запрос выполнен. -->
+            <property name="hibernate.use_sql_comments" value="true"/>
+
+
+            <!-- event listeners Док. hibernate: https://access.redhat.com/documentation/en-US/JBoss_Enterprise_Application_Platform/4.3/html/Hibernate_EntityManager_User_Guide/sect-Hibernate_EntityManager_User_Guide-Setup_and_configuration-Event_listeners.html
+            <property name="hibernate.ejb.event.auto-flush" value="ru.argustelecom.system.inf.transaction.UOWFlushEventListener"/>
+            <property name="hibernate.ejb.event.flush" value="ru.argustelecom.system.inf.transaction.UOWFlushEventListener"/>
+            -->
+
+            <!-- настройки hibernate-search -->
+            <!-- поднятие версии движка lucene должно сопровождаться полным ребилдом индекса, то есть не следует
+                 механически поднимать эту версию при смене версии hibernate search -->
+            <!--<property name="hibernate.search.lucene_version" value="LUCENE_5_3_1" />-->
+            <!--<property name="hibernate.search.generate_statistics" value="true" />-->
+            <!--<property name="hibernate.search.jmx_enabled" value="true" />-->
+            <!--<property name="hibernate.search.default.exclusive_index_use" value="true" />-->
+            <!--<property name="hibernate.search.default.indexBase" value="${argus.textsearch.infinispan.store-path}" />-->
+            <!--<property name="hibernate.search.default.worker.backend" value="ru.argustelecom.system.inf.search.cluster.HandmadeClusterBackendQueueProcessor" />-->
+            <!-- расчет, что бэкенд отрабатывает в контексте той же транзакции, в которой сделаны изменения - см. процессор -->
+
+            <!-- kostd, TASK-70172: ISPN-6425 early prevention -->
+            <property name="hibernate.search.default.worker.execution" value="sync"/>
+            <property name="hibernate.search.default.write_metadata_async" value="false"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>

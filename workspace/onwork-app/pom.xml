@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>server-app</artifactId>
+        <groupId>org.onbrains.onwork</groupId>
+        <version>0.1.0</version>
+    </parent>
+
+    <artifactId>onwork-app</artifactId>
+
+    <packaging>ear</packaging>
+    <name>${project.artifactId}</name>
+
+    <properties>
+        <main.basedir>${project.parent.basedir}/..</main.basedir>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.onbrains.onwork</groupId>
+            <artifactId>inf</artifactId>
+            <version>${onwork.version}</version>
+            <type>ejb</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.onbrains.onwork</groupId>
+            <artifactId>env</artifactId>
+            <version>${onwork.version}</version>
+            <type>ejb</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.onbrains.onwork</groupId>
+            <artifactId>time</artifactId>
+            <version>${onwork.version}</version>
+            <type>ejb</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.onbrains.onwork</groupId>
+            <artifactId>webui</artifactId>
+            <version>${onwork.version}</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.8</version>
+                <configuration>
+                    <version>6</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <!--<initializeInOrder>true</initializeInOrder>-->
+                    <!--<classifier>${argus.dist.customer-classifier}</classifier>-->
+                    <generatedDescriptorLocation>${project.build.directory}</generatedDescriptorLocation>
+                    <applicationXml>${project.build.directory}/application.xml</applicationXml>
+                    <applicationName>onwork-app</applicationName>
+                    <modules>
+                        <ejbModule>
+                            <groupId>org.onbrains.onwork</groupId>
+                            <artifactId>inf</artifactId>
+                            <excluded>false</excluded>
+                        </ejbModule>
+
+                        <ejbModule>
+                            <groupId>org.onbrains.onwork</groupId>
+                            <artifactId>env</artifactId>
+                            <excluded>false</excluded>
+                        </ejbModule>
+
+                        <ejbModule>
+                            <groupId>org.onbrains.onwork</groupId>
+                            <artifactId>time</artifactId>
+                            <excluded>false</excluded>
+                        </ejbModule>
+
+                        <webModule>
+                            <groupId>org.onbrains.onwork</groupId>
+                            <artifactId>webui</artifactId>
+                            <contextRoot>/onwork</contextRoot>
+                            <excluded>false</excluded>
+                        </webModule>
+                    </modules>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

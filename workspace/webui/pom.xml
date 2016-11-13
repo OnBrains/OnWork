@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>server-app</artifactId>
+        <groupId>org.onbrains.onwork</groupId>
+        <version>0.1.0</version>
+    </parent>
+
+    <artifactId>webui</artifactId>
+    <packaging>war</packaging>
+    <name>${project.artifactId}</name>
+
+    <properties>
+        <main.basedir>${project.parent.basedir}/..</main.basedir>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.onbrains.onwork</groupId>
+            <artifactId>inf-ui</artifactId>
+            <version>${onwork.version}</version>
+            <optional>false</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.onbrains.onwork</groupId>
+            <artifactId>env-ui</artifactId>
+            <version>${onwork.version}</version>
+            <optional>false</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.onbrains.onwork</groupId>
+            <artifactId>time-ui</artifactId>
+            <version>${onwork.version}</version>
+            <optional>false</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
