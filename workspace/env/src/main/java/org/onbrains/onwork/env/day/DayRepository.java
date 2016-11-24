@@ -2,8 +2,8 @@ package org.onbrains.onwork.env.day;
 
 import static java.time.temporal.ChronoField.DAY_OF_WEEK;
 import static java.time.temporal.TemporalAdjusters.lastDayOfYear;
-import static org.onbrains.onwork.env.day.model.DayType.holiday;
-import static org.onbrains.onwork.env.day.model.DayType.workDay;
+import static org.onbrains.onwork.env.day.model.DayType.HOLIDAY;
+import static org.onbrains.onwork.env.day.model.DayType.WORK_DAY;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -44,8 +44,13 @@ public class DayRepository implements Serializable {
 		LocalDate dayOfYear = LocalDate.of(year, 1, 1);
 		LocalDate lastDayOfYear = dayOfYear.with(lastDayOfYear());
 
+		DayType workDay = em.find(DayType.class, WORK_DAY);
+		DayType holiday = em.find(DayType.class, HOLIDAY);
+
+		DayType type;
 		while (!dayOfYear.equals(lastDayOfYear)) {
-			create(dayOfYear, determineType(dayOfYear));
+			type = !HOLIDAY_DAYS.contains(dayOfYear.get(DAY_OF_WEEK)) ? workDay : holiday;
+			create(dayOfYear, type);
 			dayOfYear = dayOfYear.plusDays(1);
 		}
 	}
@@ -71,10 +76,6 @@ public class DayRepository implements Serializable {
 
 		em.persist(day);
 		return day;
-	}
-
-	private DayType determineType(@NotNull LocalDate date) {
-		return !HOLIDAY_DAYS.contains(date.get(DAY_OF_WEEK)) ? workDay(em) : holiday(em);
 	}
 
 }
