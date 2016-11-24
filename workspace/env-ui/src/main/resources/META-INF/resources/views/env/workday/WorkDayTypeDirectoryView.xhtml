@@ -1,0 +1,95 @@
+<ui:composition template="/views/inf/page/View.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+                xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <ui:define name="head">
+        <title>Справочник типов рабочих дней</title>
+        <h:outputStylesheet name="style/css/theme-override.css"/>
+    </ui:define>
+
+    <ui:define name="pagePath">
+        <li>Справочники</li>
+        <li>Дни</li>
+        <li class="active">Типы рабочих дней</li>
+    </ui:define>
+
+    <ui:define name="body">
+
+        <h:form id="work_day_type_directory_form">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3>
+                                <h:outputText id="panel_header" value="Типы рабочих дней"/>
+                            </h3>
+                        </div>
+
+                        <div class="col-md-4">
+                            <!--<h:commandLink process="@this" action="#{workDayTypeDirectoryVC.remove()}"-->
+                                           <!--styleClass="button button-border button-rounded button-leaf tright fright">-->
+                                <!--<i class="icon-trash2"></i>-->
+                                <!--<span>Удалить</span>-->
+                            <!--</h:commandLink>-->
+
+                            <!--<h:commandLink process="@this" onclick="PF('WorkDayTypeEditDlgVar').show();"-->
+                                           <!--styleClass="button button-border button-rounded button-leaf fright">-->
+                                <!--<i class="icon-plus"></i>-->
+                                <!--<span>Создать</span>-->
+                            <!--</h:commandLink>-->
+
+                            <p:commandButton process="@this" action="#{workDayTypeDirectoryVC.remove()}" value="Удалить"
+                                             styleClass="button button-border button-rounded button-leaf tright fright"
+                                             update="types_table"/>
+
+                            <p:commandButton process="@this" onclick="PF('WorkDayTypeEditDlgVar').show();" value="Создать"
+                                             styleClass="button button-border button-rounded button-leaf tright fright"/>
+                        </div>
+                    </div>
+                </div>
+
+
+                <h:dataTable id="types_table" value="#{workDayTypeDirectoryVC.types}" var="type" styleClass="table">
+
+                    <h:column width="50px">
+                        <h:selectBooleanCheckbox id="cb" styleClass="checkbox-style" value="false">
+                            <f:ajax listener="#{workDayTypeDirectoryVC.toggleSelect(type)}"/>
+                        </h:selectBooleanCheckbox>
+                        <h:outputLabel for="cb" class="checkbox-style-3-label"/>
+                    </h:column>
+
+                    <h:column width="30%">
+                        <f:facet name="header">Название</f:facet>
+                        <h:outputText value="#{type.objectName}"/>
+                    </h:column>
+
+                    <h:column width="10%">
+                        <f:facet name="header">Фактор</f:facet>
+                        <h:outputText value="#{type.factor}"/>
+                    </h:column>
+
+                    <h:column width="10%">
+                        <f:facet name="header">Цвет</f:facet>
+                        <h:outputText value="#{type.color}"/>
+                    </h:column>
+
+                    <h:column width="20%">
+                        <f:facet name="header">Иконка</f:facet>
+                        <h:outputText value="#{type.icon}"/>
+                    </h:column>
+
+                    <h:column width="40%">
+                        <f:facet name="header">Описание</f:facet>
+                        <h:outputText value="#{type.description}"/>
+                    </h:column>
+
+                </h:dataTable>
+            </div>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
