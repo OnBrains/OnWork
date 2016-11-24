@@ -20,48 +20,46 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-md-8">
-                        <h4>
+                        <h3>
                             <h:outputText id="panel_header" value="#{dateFormat.toMMMMMYYYY(dayDirectoryVM.selectedMonth)}"/>
-                        </h4>
+                        </h3>
                     </div>
 
                     <div class="col-md-4">
-                        <p:commandButton value="Previous" action="#{dayDirectoryVM.previousMonth()}" process="@this"
+                        <h:commandButton value="Next" action="#{dayDirectoryVM.nextMonth()}" process="@this"
                                          update="day_directory_form:days_table panel_header" styleClass="button fright"/>
-                        <p:commandButton value="Next" action="#{dayDirectoryVM.nextMonth()}" process="@this"
-                                         update="day_directory_form:days_table panel_header"
-                                         styleClass="button  button-border button-border-thin button-leaf fright"/>
+                        <h:commandButton value="Previous" action="#{dayDirectoryVM.previousMonth()}" process="@this"
+                                         update="day_directory_form:days_table panel_header" styleClass="button fright"/>
                     </div>
                 </div>
             </div>
 
-            <div class="panel-body">
-                <h:form id="day_directory_form">
+            <h:form id="day_directory_form">
 
-                    <p:commandButton value="Create days" action="#{dayDirectoryVM.createDaysForYear()}" process="@this"
-                                     update="day_directory_form" rendered="#{not dayDirectoryVM.yearHaveDays}"/>
+                <h:commandButton value="Create days" action="#{dayDirectoryVM.createDaysForYear()}" process="@this"
+                                 update="day_directory_form" rendered="#{not dayDirectoryVM.yearHaveDays}"/>
 
-                    <p:dataTable id="days_table" value="#{dayDirectoryVM.days}" var="day" tableStyleClass="table table-bordered" scrollable="false" scrollHeight="200">
+                <h:dataTable id="days_table" value="#{dayDirectoryVM.days}" var="day" styleClass="table">
 
-                        <p:column headerText="День" width="20%">
-                            <!--<f:facet name="header">День</f:facet>-->
-                            <h:outputText value="#{dateFormat.toDDEE(day.value).toLowerCase()}"/>
-                        </p:column>
+                    <p:column headerText="День" width="20%">
+                        <f:facet name="header">День</f:facet>
+                        <h:outputText value="#{dateFormat.toDDEE(day.value).toLowerCase()}"/>
+                    </p:column>
 
-                        <p:column headerText="Тип" width="30%">
-                            <!--<f:facet name="header">Тип</f:facet>-->
-                            <h:outputText value="#{day.type.objectName}"/>
-                        </p:column>
+                    <p:column headerText="Тип" width="30%">
+                        <f:facet name="header">Тип</f:facet>
+                        <h:outputText value="#{day.type.objectName}"/>
+                    </p:column>
 
-                        <p:column headerText="Описание" width="50%">
-                            <!--<f:facet name="header">Описание</f:facet>-->
-                            <h:outputText value="#{day.description}"/>
-                        </p:column>
+                    <p:column headerText="Описание" width="50%">
+                        <f:facet name="header">Описание</f:facet>
+                        <h:outputText value="#{day.description}"/>
+                    </p:column>
 
-                    </p:dataTable>
+                </h:dataTable>
 
-                </h:form>
-            </div>
+            </h:form>
+
         </div>
 
     </ui:define>
