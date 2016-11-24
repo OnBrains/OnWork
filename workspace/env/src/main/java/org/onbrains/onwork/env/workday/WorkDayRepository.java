@@ -46,7 +46,6 @@ public class WorkDayRepository implements Serializable {
 		daysOfMonth.forEach(day -> create(day, employee));
 	}
 
-//	@NamedQuery(name = FIND_WORK_DAY, query = "from WorkDay wd where wd.employee = :employee and wd.day.value = :date")
 	public WorkDay findWorkDay(@NotNull LocalDate date, @NotNull Employee employee) {
 		try {
 			return em.createNamedQuery(FIND_WORK_DAY, WorkDay.class).setParameter("employee", employee)
@@ -56,11 +55,6 @@ public class WorkDayRepository implements Serializable {
 		}
 	}
 
-	//@formatter:off
-//	@NamedQuery(name = FIND_WORK_DAYS_OF_MONTH, query = "from WorkDay wd where wd.employee = :employee " +
-//														"	and to_char(wd.day.value, 'yyyyMM') = to_char(:month, 'yyyyMM') " +
-//														"order by wd.day")
-	//@formatter:on
 	public List<WorkDay> findWorkDaysOf(@NotNull LocalDate month, @NotNull Employee employee) {
 		return em.createNamedQuery(FIND_WORK_DAYS_OF_MONTH, WorkDay.class).setParameter("employee", employee)
 				.setParameter("month", month).getResultList();
