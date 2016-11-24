@@ -3,6 +3,8 @@ package org.onbrains.onwork.env.workday.model;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import org.onbrains.onwork.env.day.model.DayType;
 

@@ -1,63 +1,46 @@
 package org.onbrains.onwork.env.day.model;
 
-import static org.onbrains.onwork.inf.dataaccess.utils.EntityManagerUtils.queryCachedEntities;
-
-import java.util.List;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.DiscriminatorOptions;
 import org.onbrains.onwork.inf.modelbase.BusinessDirectory;
 
 @Entity
 @Access(AccessType.FIELD)
-@Table(schema = "system", name = "day_type", uniqueConstraints = @UniqueConstraint(name = "uc_day_type", columnNames = { "name" }))
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = DayType.CACHE_REGION_NAME)
+@Table(schema = "system", name = "day_type", uniqueConstraints = @UniqueConstraint(name = "uc_day_type", columnNames = {
+		"name" }))
+@NamedQueries({ @NamedQuery(name = DayType.FIND_ALL, query = "from DayType") })
 public class DayType extends BusinessDirectory {
 
 	private static final long serialVersionUID = -4536998624025275478L;
 
-	public static final String CACHE_REGION_NAME = "org.onbrains.onwork.evn-cache-region";
+	public static final String FIND_ALL = "findAll";
 
 	public static final long WORK_DAY = 1;
 	public static final long HOLIDAY = 2;
 	public static final long SHORT_DAY = 3;
-
-	public static DayType workDay(@NotNull EntityManager em) {
-		return find(WORK_DAY, em);
-	}
-
-	public static DayType holiday(@NotNull EntityManager em) {
-		return find(HOLIDAY, em);
-	}
-
-	public static DayType shorDay(@NotNull EntityManager em) {
-		return find(SHORT_DAY, em);
-	}
-
-	public static DayType find(@NotNull long id, @NotNull EntityManager em) {
-		return em.find(DayType.class, id);
-	}
-
-	public static List<DayType> values(@NotNull EntityManager em) {
-		return queryCachedEntities(em, DayType.class, CACHE_REGION_NAME);
-	}
 
 	@Column(length = 128, nullable = false)
 	private String name;
 
 	@Column(nullable = false)
 	private float factor;
+
+	@Column(length = 16)
+	private String color;
+
+	@Column(length = 16)
+	private String icon;
+
+	@Column(length = 512)
+	private String description;
 
 	@Column(nullable = false)
 	private boolean sys;
@@ -74,7 +57,6 @@ public class DayType extends BusinessDirectory {
 
 	@Override
 	public String getObjectName() {
-		this.getId();
 		return getName();
 	}
 
@@ -96,6 +78,30 @@ public class DayType extends BusinessDirectory {
 
 	public void setFactor(float factor) {
 		this.factor = factor;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	@Override
