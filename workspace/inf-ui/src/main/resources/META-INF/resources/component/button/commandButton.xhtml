@@ -1,0 +1,68 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"  xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cc="http://java.sun.com/jsf/composite">
+
+    <cc:interface componentType="commandButton">
+        <cc:attribute name="id" type="java.lang.String"/>
+        <cc:attribute name="action" targets="buttonId"/>
+        <cc:attribute name="actionListener" type="javax.faces.event.ActionEvent"/>
+        <cc:attribute name="immediate" type="java.lang.Boolean"/>
+        <cc:attribute name="rendered" type="java.lang.Boolean"/>
+        <cc:attribute name="value" targets="buttonId"/>
+        <cc:attribute name="accesskey" type="java.lang.String"/>
+        <cc:attribute name="alt" type="java.lang.String"/>
+        <cc:attribute name="dir" type="java.lang.String"/>
+        <cc:attribute name="disabled" type="java.lang.Boolean"/>
+        <cc:attribute name="image" type="java.lang.String"/>
+        <cc:attribute name="label" type="java.lang.String"/>
+        <cc:attribute name="lang" type="java.lang.String"/>
+        <cc:attribute name="onblur" type="java.lang.String"/>
+        <cc:attribute name="onchange" type="java.lang.String"/>
+        <cc:attribute name="onclick" type="java.lang.String"/>
+        <cc:attribute name="ondblclick" type="java.lang.String"/>
+        <cc:attribute name="onfocus" type="java.lang.String"/>
+        <cc:attribute name="onkeydown" type="java.lang.String"/>
+        <cc:attribute name="onkeypress" type="java.lang.String"/>
+        <cc:attribute name="onkeyup" type="java.lang.String"/>
+        <cc:attribute name="onmousedown" type="java.lang.String"/>
+        <cc:attribute name="onmousedown" type="java.lang.String"/>
+        <cc:attribute name="onmousemove" type="java.lang.String"/>
+        <cc:attribute name="onmouseout" type="java.lang.String"/>
+        <cc:attribute name="onmouseover" type="java.lang.String"/>
+        <cc:attribute name="onmouseup" type="java.lang.String"/>
+        <cc:attribute name="onselect" type="java.lang.String"/>
+        <cc:attribute name="readonly" type="java.lang.Boolean"/>
+        <cc:attribute name="role" type="java.lang.String"/>
+        <cc:attribute name="style" type="java.lang.String"/>
+        <cc:attribute name="styleClass" type="java.lang.String" default="button"/>
+        <cc:attribute name="tabindex" type="java.lang.String"/>
+        <cc:attribute name="title" type="java.lang.String"/>
+        <cc:attribute name="type" type="java.lang.String" default="button"/>
+        <cc:attribute name="binding" type="javax.faces.component.UIComponent"/>
+
+        <!--custom attributes-->
+        <cc:attribute name="process" type="java.lang.String" default="@form"/>
+        <cc:attribute name="update" type="java.lang.String"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <h:commandButton id="buttonId" action="#{cc.attrs.action}" actionListener="#{cc.attrs.actionListener}"
+                         immediate="#{cc.attrs.immediate}" rendered="#{cc.attrs.rendered}" value="#{cc.attrs.value}"
+                         accesskey="#{cc.attrs.accesskey}" alt="#{cc.attrs.alt}" dir="#{cc.attrs.dir}"
+                         disabled="#{cc.attrs.disabled}" image="#{cc.attrs.image}" label="#{cc.attrs.label}"
+                         lang="#{cc.attrs.lang}" onblur="#{cc.attrs.onblur}" onchange="#{cc.attrs.onchange}"
+                         onclick="#{cc.attrs.onclick}" ondblclick="#{cc.attrs.ondblclick}" onfocus="#{cc.attrs.onfocus}"
+                         onkeydown="#{cc.attrs.onkeydown}" onkeypress="#{cc.attrs.onkeypress}"
+                         onkeyup="#{cc.attrs.onkeyup}" onmousedown="#{cc.attrs.onmousedown}"
+                         onmousemove="#{cc.attrs.onmousemove}" onmouseout="#{cc.attrs.onmouseout}"
+                         onmouseover="#{cc.attrs.onmouseover}" onmouseup="#{cc.attrs.onmouseup}"
+                         onselect="#{cc.attrs.onselect}" readonly="#{cc.attrs.readonly}" role="#{cc.attrs.role}"
+                         style="#{cc.attrs.style}" styleClass="#{cc.attrs.styleClass}" tabindex="#{cc.attrs.tabindex}"
+                         title="#{cc.attrs.title}" type="#{cc.attrs.type}" binding="#{cc.attrs.binding}">
+
+            <f:ajax execute="#{cc.attrs.process}" render="#{cc.attrs.update}"/>
+
+        </h:commandButton>
+    </cc:implementation>
+
+</ui:component>
