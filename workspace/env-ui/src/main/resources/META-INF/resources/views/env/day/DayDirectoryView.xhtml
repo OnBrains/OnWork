@@ -1,7 +1,7 @@
 <ui:composition template="/views/inf/page/View.xhtml" xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions">
+                xmlns:inf="http://onbrains.org/onwork/inf">
 
     <ui:define name="head">
         <title>Справочник дней</title>
@@ -26,10 +26,16 @@
                     </div>
 
                     <div class="col-md-4">
+                        <inf:commandButton id="test" value="#{'test2'}" action="#{dayDirectoryVM.nextMonth()}"/>
+
                         <h:commandButton value="Next" action="#{dayDirectoryVM.nextMonth()}" process="@this"
-                                         update="day_directory_form:days_table panel_header" styleClass="button fright"/>
+                                         update="day_directory_form:days_table panel_header" styleClass="button fright">
+                            <f:ajax execute="@this" render="day_directory_form:days_table panel_header"/>
+                        </h:commandButton>
                         <h:commandButton value="Previous" action="#{dayDirectoryVM.previousMonth()}" process="@this"
-                                         update="day_directory_form:days_table panel_header" styleClass="button fright"/>
+                                         update="day_directory_form:days_table panel_header" styleClass="button fright">
+                            <f:ajax execute="@this" render="day_directory_form:days_table panel_header"/>
+                        </h:commandButton>
                     </div>
                 </div>
             </div>
