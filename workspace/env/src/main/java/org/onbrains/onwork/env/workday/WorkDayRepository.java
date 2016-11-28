@@ -17,7 +17,6 @@ import org.onbrains.onwork.env.day.model.Day;
 import org.onbrains.onwork.env.employee.model.Employee;
 import org.onbrains.onwork.env.sequence.IdSequenceService;
 import org.onbrains.onwork.env.workday.model.WorkDay;
-import org.onbrains.onwork.env.workday.model.WorkDayType;
 
 /**
  * Created on 13.11.2016 20:09.
@@ -69,7 +68,7 @@ public class WorkDayRepository implements Serializable {
 
 		workDay.setEmployee(employee);
 		workDay.setDay(day);
-		workDay.setType((WorkDayType) day.getType());
+		workDay.setType(day.getType());
 		workDay.setState(NO_WORK);
 
 		em.persist(workDay);

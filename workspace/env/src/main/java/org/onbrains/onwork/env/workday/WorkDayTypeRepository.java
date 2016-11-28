@@ -1,6 +1,7 @@
 package org.onbrains.onwork.env.workday;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -26,7 +27,7 @@ public class WorkDayTypeRepository implements Serializable {
 	@Inject
 	private EntityManager em;
 
-	public WorkDayType create(@NotNull String name, float factor, String color, String icon, String description) {
+	public WorkDayType create(@NotNull String name, Float factor, String color, String icon, String description) {
 		WorkDayType workDayType = new WorkDayType(iss.nextValue(WorkDayType.class));
 
 		workDayType.setName(name);
@@ -37,6 +38,10 @@ public class WorkDayTypeRepository implements Serializable {
 
 		em.persist(workDayType);
 		return workDayType;
+	}
+
+	public List<WorkDayType> findAll() {
+		return em.createNamedQuery(WorkDayType.FIND_ALL, WorkDayType.class).getResultList();
 	}
 
 }

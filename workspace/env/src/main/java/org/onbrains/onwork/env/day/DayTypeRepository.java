@@ -44,9 +44,4 @@ public class DayTypeRepository implements Serializable {
 		return em.createNamedQuery(DayType.FIND_ALL, DayType.class).getResultList();
 	}
 
-	public List<DayType> findSys() {
-		return em.createQuery("from DayType dt where dtype = :dtype", DayType.class).setParameter("dtype", "DayType")
-				.getResultList();
-	}
-
 }

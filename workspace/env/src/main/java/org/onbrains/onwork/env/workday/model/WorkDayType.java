@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-import org.onbrains.onwork.env.day.model.DayType;
+import org.onbrains.onwork.env.day.model.AbstractDayType;
 
 /**
  * Created on 13.11.2016 16:11.
@@ -15,9 +15,12 @@ import org.onbrains.onwork.env.day.model.DayType;
  */
 @Entity
 @Access(AccessType.FIELD)
-public class WorkDayType extends DayType {
+@NamedQueries({ @NamedQuery(name = WorkDayType.FIND_ALL, query = "from WorkDayType") })
+public class WorkDayType extends AbstractDayType {
 
 	private static final long serialVersionUID = 4101561696210252825L;
+
+	public static final String FIND_ALL = "WorkDayType.findAll";
 
 	protected WorkDayType() {
 	}

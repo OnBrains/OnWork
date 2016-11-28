@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import org.onbrains.onwork.env.day.model.AbstractDayType;
 import org.onbrains.onwork.env.day.model.Day;
 import org.onbrains.onwork.env.employee.model.Employee;
 import org.onbrains.onwork.inf.modelbase.BusinessObject;
@@ -36,7 +37,7 @@ public class WorkDay extends BusinessObject {
 	private Day day;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	private WorkDayType type;
+	private AbstractDayType type;
 
 	@Column(name = "coming_time")
 	private LocalDateTime comingTime;
@@ -83,11 +84,11 @@ public class WorkDay extends BusinessObject {
 		this.day = day;
 	}
 
-	public WorkDayType getType() {
+	public AbstractDayType getType() {
 		return type;
 	}
 
-	public void setType(WorkDayType type) {
+	public void setType(AbstractDayType type) {
 		this.type = type;
 	}
 
