@@ -22,9 +22,10 @@
         <version.el-api>1.0.5.Final</version.el-api>
         <version.hibernate>5.2.3.Final</version.hibernate>
         <version.primefaces>6.0</version.primefaces>
+        <version.primefaces-all-themes>1.0.10</version.primefaces-all-themes>
         <version.primefaces-extensions>6.0.0</version.primefaces-extensions>
         <version.omnifaces>2.5.1</version.omnifaces>
-
+        <version.font-awesome>4.7.0</version.font-awesome>
 
         <!-- Standard directories -->
         <main.basedir>${project.basedir}/..</main.basedir>
@@ -132,6 +133,13 @@
             </dependency>
 
             <dependency>
+                <groupId>org.primefaces.themes</groupId>
+                <artifactId>all-themes</artifactId>
+                <version>${version.primefaces-all-themes}</version>
+            </dependency>
+
+
+            <dependency>
                 <groupId>org.primefaces.extensions</groupId>
                 <artifactId>primefaces-extensions</artifactId>
                 <version>${version.primefaces-extensions}</version>
@@ -142,6 +150,13 @@
                 <artifactId>omnifaces</artifactId>
                 <version>${version.omnifaces}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>font-awesome</artifactId>
+                <version>${version.font-awesome}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

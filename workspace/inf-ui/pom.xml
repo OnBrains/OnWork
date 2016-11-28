@@ -18,6 +18,14 @@
         <main.basedir>${project.parent.basedir}/..</main.basedir>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>Prime Repo</name>
+            <url>http://repository.primefaces.org</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.onbrains.onwork</groupId>
@@ -44,13 +52,18 @@
         </dependency>
 
         <dependency>
-            <groupId>org.primefaces.extensions</groupId>
-            <artifactId>primefaces-extensions</artifactId>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>all-themes</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.omnifaces</groupId>
             <artifactId>omnifaces</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
         </dependency>
 
     </dependencies>
