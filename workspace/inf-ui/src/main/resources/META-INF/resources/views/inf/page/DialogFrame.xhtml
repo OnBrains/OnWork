@@ -1,0 +1,24 @@
+<ui:composition xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:form id="#{dlgFormId}">
+    <div id="#{dlgId}" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <ui:insert name="dlg-title"/>
+                </div>
+
+                <div class="modal-body">
+                    <ui:insert name="dlg-body"/>
+                </div>
+
+                <div class="modal-footer">
+                    <ui:insert name="dlg-footer"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    </h:form>
+
+</ui:composition>
