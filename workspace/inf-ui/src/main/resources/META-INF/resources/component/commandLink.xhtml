@@ -1,0 +1,102 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+			  xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+			  xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:cc="http://java.sun.com/jsf/composite"
+			  xmlns:inf="http://onbrains.org/onwork/inf">
+
+	<cc:interface name="commandLink">
+		<cc:attribute name="id" type="java.lang.String"/>
+		<!--<cc:attribute name="action" targets="#{cc.attrs.id}_btn"/>-->
+		<cc:attribute name="action" method-signature="java.lang.Object action()" default="null"/>
+		<!--<cc:attribute name="actionListener" method-signature="void actionListener(javax.faces.event.ActionEvent)"/>-->
+		<cc:attribute name="immediate" type="java.lang.Boolean"/>
+		<cc:attribute name="rendered" type="java.lang.Boolean"/>
+		<cc:attribute name="value" type="java.lang.String"/>
+		<cc:attribute name="accesskey" type="java.lang.String"/>
+		<cc:attribute name="dir" type="java.lang.String"/>
+		<cc:attribute name="disabled" type="java.lang.Boolean"/>
+		<cc:attribute name="lang" type="java.lang.String"/>
+		<cc:attribute name="onblur" type="java.lang.String"/>
+		<cc:attribute name="onclick" targets="_btn"/>
+		<cc:attribute name="ondblclick" type="java.lang.String"/>
+		<cc:attribute name="onfocus" type="java.lang.String"/>
+		<cc:attribute name="onkeydown" type="java.lang.String"/>
+		<cc:attribute name="onkeypress" type="java.lang.String"/>
+		<cc:attribute name="onkeyup" type="java.lang.String"/>
+		<cc:attribute name="onmousedown" type="java.lang.String"/>
+		<cc:attribute name="onmousedown" type="java.lang.String"/>
+		<cc:attribute name="onmousemove" type="java.lang.String"/>
+		<cc:attribute name="onmouseout" type="java.lang.String"/>
+		<cc:attribute name="onmouseover" type="java.lang.String"/>
+		<cc:attribute name="onmouseup" type="java.lang.String"/>
+		<cc:attribute name="style" type="java.lang.String"/>
+		<cc:attribute name="styleClass" type="java.lang.String"/>
+		<cc:attribute name="tabindex" type="java.lang.String"/>
+		<cc:attribute name="title" type="java.lang.String"/>
+		<cc:attribute name="type" type="java.lang.String"/>
+		<cc:attribute name="charset" type="java.lang.String"/>
+		<cc:attribute name="coords" type="java.lang.String"/>
+		<cc:attribute name="hreflang" type="java.lang.String"/>
+		<cc:attribute name="rel" type="java.lang.String"/>
+		<cc:attribute name="rev" type="java.lang.String"/>
+		<cc:attribute name="shape" type="java.lang.String"/>
+		<cc:attribute name="target" type="java.lang.String"/>
+		<cc:attribute name="binding" type="javax.faces.component.UIComponent"/>
+
+		<!--custom attributes-->
+		<cc:attribute name="icon" type="java.lang.String"/>
+		<cc:attribute name="iconStyleClass" type="java.lang.String"/>
+		<cc:attribute name="process" type="java.lang.Object" default="@form"/>
+		<cc:attribute name="update" type="java.lang.Object"/>
+	</cc:interface>
+
+	<cc:implementation>
+		<h:commandLink id="_btn"
+					   action="#{cc.attrs.action}"
+					   immediate="#{cc.attrs.immediate}"
+					   rendered="#{cc.attrs.rendered}"
+					   accesskey="#{cc.attrs.accesskey}"
+					   dir="#{cc.attrs.dir}"
+					   disabled="#{cc.attrs.disabled}"
+					   lang="#{cc.attrs.lang}"
+					   onblur="#{cc.attrs.onblur}"
+					   onclick="#{cc.attrs.onblur}"
+					   ondblclick="#{cc.attrs.ondblclick}"
+					   onfocus="#{cc.attrs.onfocus}"
+					   onkeydown="#{cc.attrs.onkeypress}"
+					   onkeypress="#{cc.attrs.onkeypress}"
+					   onkeyup="#{cc.attrs.onkeyup}"
+					   onmousedown="#{cc.attrs.onmousedown}"
+					   onmousemove="#{cc.attrs.onmousemove}"
+					   onmouseout="#{cc.attrs.onmouseout}"
+					   onmouseover="#{cc.attrs.onmouseover}"
+					   onmouseup="#{cc.attrs.onmouseup}"
+					   style="#{cc.attrs.style}"
+					   styleClass="btn #{cc.attrs.styleClass}"
+					   tabindex="#{cc.attrs.tabindex}"
+					   title="#{cc.attrs.title}"
+					   type="#{cc.attrs.type}"
+					   binding="#{cc.attrs.binding}"
+					   charset="#{cc.attrs.charset}"
+					   coords="#{cc.attrs.coords}"
+					   hreflang="#{cc.attrs.hreflang}"
+					   rel="#{cc.attrs.rel}"
+					   rev="#{cc.attrs.rev}"
+					   shape="#{cc.attrs.shape}"
+					   target="#{cc.attrs.target}">
+
+			<c:if test="#{cc.attrs.icon ne null}">
+				<inf:icon value="#{cc.attrs.icon}" styleClass="#{cc.attrs.iconStyleClass}"/>
+			</c:if>
+
+			<c:if test="#{cc.attrs.value ne null}">
+				<span>#{cc.attrs.value}</span>
+			</c:if>
+
+			<f:ajax execute="#{cc.attrs.process}" render="#{cc.attrs.update}"/>
+
+			<cc:insertChildren/>
+
+		</h:commandLink>
+	</cc:implementation>
+
+</ui:component>

@@ -5,6 +5,6 @@
 
     <namespace>http://onbrains.org/onwork/inf</namespace>
 
-    <composite-library-name>component/button</composite-library-name>
+    <composite-library-name>component</composite-library-name>
 
 </facelet-taglib>
