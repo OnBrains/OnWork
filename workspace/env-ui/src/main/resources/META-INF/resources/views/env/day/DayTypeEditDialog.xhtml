@@ -1,0 +1,65 @@
+<ui:composition template="/views/inf/page/DialogFrame.xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:inf="http://onbrains.org/onwork/inf">
+
+    <ui:define name="dlg-title">
+        <h3>
+            <h:outputText value="#{dlgController.getHeader()}"/>
+        </h3>
+    </ui:define>
+
+    <ui:define name="dlg-body">
+        <!--<h:form id="#{bodyId}">-->
+            <div class="form-group has-danger">
+                <h:outputLabel for="name" value="Наименование:" styleClass="small"/>
+                <h:inputText id="name" value="#{dlgController.name}" styleClass="form-control" required="true" maxlength="128">
+                    <f:ajax execute="@this"/>
+                </h:inputText>
+                <div class="form-control-feedback">Sorry, that username's taken. Try another?</div>
+            </div>
+
+            <div class="form-group">
+                <h:outputLabel for="factor" value="Фактор:" styleClass="small"/>
+                <h:inputText id="factor" value="#{dlgController.factor}" styleClass="form-control" required="true">
+                    <f:validateDoubleRange minimum="0" maximum="1"/>
+                    <f:ajax execute="@this"/>
+                </h:inputText>
+            </div>
+
+            <div class="form-group">
+                <h:outputLabel for="color" value="Цвет:" styleClass="small"/>
+                <h:inputText id="color" value="#{dlgController.color}" styleClass="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <h:outputLabel for="icon" value="Иконка" styleClass="small"/>
+                <h:inputText id="icon" value="#{dlgController.icon}" styleClass="form-control"/>
+            </div>
+
+            <div class="form-group">
+                <h:outputLabel for="description" value="Описание:" styleClass="small"/>
+                <h:inputTextarea id="description" value="#{dlgController.description}" cols="3" styleClass="form-control">
+                    <f:ajax execute="@this"/>
+                </h:inputTextarea>
+            </div>
+        <!--</h:form>-->
+    </ui:define>
+
+    <ui:define name="dlg-footer">
+        <!--<h:form>-->
+            <h:commandButton styleClass="btn btn-success mr-1" action="#{dlgController.submit()}">
+                <inf:icon value="fa-check"/>
+                <span>Создать</span>
+                <f:ajax/>
+            </h:commandButton>
+
+            <h:commandLink onclick="$(#{dlgId}).modal('hide');" styleClass="btn btn-danger">
+                <inf:icon value="fa-check"/>
+                <span>Отмена</span>
+                <f:ajax execute="@form" render="@form"/>
+            </h:commandLink>
+        <!--</h:form>-->
+    </ui:define>
+
+
+</ui:composition>
