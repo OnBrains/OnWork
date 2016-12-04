@@ -127,25 +127,6 @@
             </dependency>
 
             <dependency>
-                <groupId>org.primefaces</groupId>
-                <artifactId>primefaces</artifactId>
-                <version>${version.primefaces}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.primefaces.themes</groupId>
-                <artifactId>all-themes</artifactId>
-                <version>${version.primefaces-all-themes}</version>
-            </dependency>
-
-
-            <dependency>
-                <groupId>org.primefaces.extensions</groupId>
-                <artifactId>primefaces-extensions</artifactId>
-                <version>${version.primefaces-extensions}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.omnifaces</groupId>
                 <artifactId>omnifaces</artifactId>
                 <version>${version.omnifaces}</version>
