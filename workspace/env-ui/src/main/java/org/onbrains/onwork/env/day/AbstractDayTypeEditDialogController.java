@@ -35,10 +35,8 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 	public void submit() {
 		if (!isEditMode())
 			create();
-		else {
+		else
 			update();
-			em.merge(editableType);
-		}
 	}
 
 	@Override
@@ -58,7 +56,12 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 		name = editableObject.getName();
 		factor = editableObject.getFactor();
 		icon = editableObject.getIcon();
+		iconColor = editableObject.getIconColor();
 		description = editableObject.getDescription();
+	}
+
+	public boolean canEdit() {
+		return editableType == null || !editableType.isSys();
 	}
 
 	// *****************************************************************************************************************
@@ -80,7 +83,7 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 
 	@Override
 	public T getEditableObject() {
-		return null;
+		return editableType;
 	}
 
 	@Override

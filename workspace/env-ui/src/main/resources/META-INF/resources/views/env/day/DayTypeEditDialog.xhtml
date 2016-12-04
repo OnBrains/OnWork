@@ -14,14 +14,14 @@
                 <div class="col-xs-9">
                     <h:outputLabel for="name" value="Наименование:" styleClass="small"/>
                     <h:inputText id="name" value="#{dlgController.name}" styleClass="form-control" required="true" maxlength="128"
-                                 requiredMessage="Обязательно для заполнения"/>
+                                 requiredMessage="Обязательно для заполнения" disabled="#{!dlgController.canEdit()}"/>
                     <div class="form-control-feedback small text-danger"><h:message for="name"/></div>
                 </div>
 
                 <div class="col-xs-3">
                     <h:outputLabel for="factor" value="Фактор:" styleClass="small"/>
                     <h:inputText id="factor" value="#{dlgController.factor}" styleClass="form-control" required="true"
-                                 requiredMessage="Обязательно для заполнения">
+                                 requiredMessage="Обязательно для заполнения" disabled="#{!dlgController.canEdit()}">
                         <f:validateDoubleRange minimum="0" maximum="1"/>
                     </h:inputText>
                     <div class="form-control-feedback small text-danger"><h:message for="factor"/></div>
@@ -70,7 +70,7 @@
     <ui:define name="dlg-footer">
         <h:commandLink action="#{dlgController.submit()}" styleClass="btn btn-success mr-1">
             <inf:icon value="fa-check"/>
-            <span>Создать</span>
+            <span>#{dlgController.getSubmitButtonLabel()}</span>
             <f:ajax execute="@form" render="@form #{update}"/>
         </h:commandLink>
 

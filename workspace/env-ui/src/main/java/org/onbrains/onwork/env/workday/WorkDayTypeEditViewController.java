@@ -3,6 +3,7 @@ package org.onbrains.onwork.env.workday;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import org.onbrains.onwork.env.day.AbstractDayTypeEditDialogController;
 import org.onbrains.onwork.env.workday.model.WorkDayType;
@@ -25,6 +26,13 @@ public class WorkDayTypeEditViewController extends AbstractDayTypeEditDialogCont
 	protected void create() {
 		WorkDayType workDayType = wdtr.create(getName(), getFactor(), getIcon(), getIconColor(), getDescription());
 		getCallback().execute(workDayType);
+	}
+
+	@Override
+	@Transactional(Transactional.TxType.REQUIRES_NEW)
+	protected void update() {
+		super.update();
+		em.merge(getEditableObject());
 	}
 
 }

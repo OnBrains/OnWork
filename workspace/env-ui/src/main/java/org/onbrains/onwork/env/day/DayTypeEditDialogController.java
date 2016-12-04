@@ -3,6 +3,7 @@ package org.onbrains.onwork.env.day;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.Transactional;
 
 import org.onbrains.onwork.env.day.model.DayType;
 
@@ -24,6 +25,13 @@ public class DayTypeEditDialogController extends AbstractDayTypeEditDialogContro
 	protected void create() {
 		DayType dayType = dtr.create(getName(), getFactor(), getIcon(), getIconColor(), getDescription());
 		getCallback().execute(dayType);
+	}
+
+	@Override
+	@Transactional(Transactional.TxType.REQUIRES_NEW)
+	protected void update() {
+		super.update();
+		em.merge(getEditableObject());
 	}
 
 }
