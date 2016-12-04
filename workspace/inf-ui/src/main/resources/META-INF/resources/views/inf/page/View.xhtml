@@ -3,23 +3,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <f:view encoding="UTF-8" contentType="text/html">
 
     <ui:insert name="metadata"/>
 
     <h:head>
-        <!--<h:outputStylesheet name="style/inf/css/style.css"/>-->
+        <h:outputStylesheet name="style/inf/css/helper.css"/>
         <h:outputStylesheet name="style/bootstrap/css/bootstrap.min.css"/>
         <h:outputStylesheet name="style/bootstrap/css/bootstrap-flex.min.css"/>
         <h:outputStylesheet name="style/bootstrap/css/bootstrap-grid.min.css"/>
         <h:outputStylesheet name="webjars/font-awesome/4.7.0/css/font-awesome.css"/>
 
+        <h:outputScript name="style/inf/js/jquery-3.1.1.min.js"/>
+        <h:outputScript name="style/inf/js/jquery-migrate-3.0.0.js"/>
+        <h:outputScript name="style/bootstrap/js/bootstrap.min.js"/>
+
         <h:outputScript name="style/inf/js/inf.js"/>
 
-        <ui:insert name="head"/>
+        <ui:insert name="header"/>
     </h:head>
 
     <h:body style="padding-top: 70px;">
@@ -51,8 +54,6 @@
             <!--<p:growl id="msg_info" for="msg_for_info" showDetail="true"/>-->
             <!--<p:growl id="msg_error" showDetail="true" autoUpdate="true" sticky="true" redisplay="false"/>-->
         <!--</div>-->
-        <h:outputScript name="style/inf/js/jquery-3.1.1.min.js"/>
-        <h:outputScript name="style/bootstrap/js/bootstrap.min.js"/>
 
     </h:body>
 
