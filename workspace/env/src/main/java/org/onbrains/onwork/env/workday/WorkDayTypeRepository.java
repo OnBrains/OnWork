@@ -27,13 +27,13 @@ public class WorkDayTypeRepository implements Serializable {
 	@Inject
 	private EntityManager em;
 
-	public WorkDayType create(@NotNull String name, Float factor, String color, String icon, String description) {
+	public WorkDayType create(@NotNull String name, Float factor, String icon, String iconColor, String description) {
 		WorkDayType workDayType = new WorkDayType(iss.nextValue(WorkDayType.class));
 
 		workDayType.setName(name);
 		workDayType.setFactor(factor);
-		workDayType.setColor(color);
 		workDayType.setIcon(icon);
+		workDayType.setIconColor(iconColor);
 		workDayType.setDescription(description);
 
 		em.persist(workDayType);

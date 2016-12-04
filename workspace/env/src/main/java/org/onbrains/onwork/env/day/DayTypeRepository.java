@@ -27,13 +27,13 @@ public class DayTypeRepository implements Serializable {
 	@Inject
 	private EntityManager em;
 
-	public DayType create(@NotNull String name, float factor, String color, String icon, String description) {
+	public DayType create(@NotNull String name, float factor, String icon, String iconColor, String description) {
 		DayType dayType = new DayType(iss.nextValue(DayType.class));
 
 		dayType.setName(name);
 		dayType.setFactor(factor);
-		dayType.setColor(color);
 		dayType.setIcon(icon);
+		dayType.setIconColor(iconColor);
 		dayType.setDescription(description);
 
 		em.persist(dayType);

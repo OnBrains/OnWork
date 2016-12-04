@@ -30,10 +30,10 @@ public abstract class AbstractDayType extends BusinessDirectory {
 	private Float factor;
 
 	@Column(length = 16)
-	private String color;
-
-	@Column(length = 16)
 	private String icon;
+
+	@Column(name = "icon_color", length = 16)
+	private String iconColor;
 
 	@Column(length = 512)
 	private String description;
@@ -76,20 +76,20 @@ public abstract class AbstractDayType extends BusinessDirectory {
 		this.factor = factor;
 	}
 
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
-	}
-
 	public String getIcon() {
 		return icon;
 	}
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public String getIconColor() {
+		return iconColor;
+	}
+
+	public void setIconColor(String iconColor) {
+		this.iconColor = iconColor;
 	}
 
 	public String getDescription() {
