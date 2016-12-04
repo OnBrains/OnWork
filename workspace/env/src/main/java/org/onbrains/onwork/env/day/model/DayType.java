@@ -17,7 +17,8 @@ public class DayType extends AbstractDayType {
 
 	public static final long WORK_DAY = 1;
 	public static final long HOLIDAY = 2;
-	public static final long SHORT_DAY = 3;
+	public static final long FESTIVAL = 3;
+	public static final long SHORT_DAY = 4;
 
 	protected DayType() {
 	}
