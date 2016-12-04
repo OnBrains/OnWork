@@ -27,8 +27,8 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 
 	private String name;
 	private Float factor;
-	private String color;
 	private String icon;
+	private String iconColor;
 	private String description;
 
 	@Override
@@ -47,8 +47,8 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 		callback = null;
 		name = null;
 		factor = null;
-		color = null;
 		icon = null;
+		iconColor = null;
 		description = null;
 	}
 
@@ -57,7 +57,6 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 		editableType = editableObject;
 		name = editableObject.getName();
 		factor = editableObject.getFactor();
-		color = editableObject.getColor();
 		icon = editableObject.getIcon();
 		description = editableObject.getDescription();
 	}
@@ -71,7 +70,6 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 	protected void update() {
 		editableType.setName(name);
 		editableType.setFactor(factor);
-		editableType.setColor(color);
 		editableType.setIcon(icon);
 		editableType.setDescription(description);
 	}
@@ -111,20 +109,20 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 		this.factor = factor;
 	}
 
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
-	}
-
 	public String getIcon() {
 		return icon;
 	}
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public String getIconColor() {
+		return iconColor;
+	}
+
+	public void setIconColor(String iconColor) {
+		this.iconColor = iconColor;
 	}
 
 	public String getDescription() {

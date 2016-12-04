@@ -1,6 +1,6 @@
 package org.onbrains.onwork.env.workday;
 
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -13,7 +13,7 @@ import org.onbrains.onwork.env.workday.model.WorkDayType;
  * @author Oleg Naumov
  */
 @Named(value = "workDayTypeEditDC")
-@RequestScoped
+@ViewScoped
 public class WorkDayTypeEditViewController extends AbstractDayTypeEditDialogController<WorkDayType> {
 
 	private static final long serialVersionUID = -5103080761051783088L;
@@ -23,7 +23,7 @@ public class WorkDayTypeEditViewController extends AbstractDayTypeEditDialogCont
 
 	@Override
 	protected void create() {
-		WorkDayType workDayType = wdtr.create(getName(), getFactor(), getColor(), getIcon(), getDescription());
+		WorkDayType workDayType = wdtr.create(getName(), getFactor(), getIcon(), getIconColor(), getDescription());
 		getCallback().execute(workDayType);
 	}
 

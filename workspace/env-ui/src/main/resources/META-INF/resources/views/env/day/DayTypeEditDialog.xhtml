@@ -9,57 +9,76 @@
     </ui:define>
 
     <ui:define name="dlg-body">
-        <!--<h:form id="#{bodyId}">-->
-            <div class="form-group has-danger">
-                <h:outputLabel for="name" value="Наименование:" styleClass="small"/>
-                <h:inputText id="name" value="#{dlgController.name}" styleClass="form-control" required="true" maxlength="128">
-                    <f:ajax execute="@this"/>
-                </h:inputText>
-                <div class="form-control-feedback">Sorry, that username's taken. Try another?</div>
-            </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-9">
+                    <h:outputLabel for="name" value="Наименование:" styleClass="small"/>
+                    <h:inputText id="name" value="#{dlgController.name}" styleClass="form-control" required="true" maxlength="128"
+                                 requiredMessage="Обязательно для заполнения"/>
+                    <div class="form-control-feedback small text-danger"><h:message for="name"/></div>
+                </div>
 
-            <div class="form-group">
-                <h:outputLabel for="factor" value="Фактор:" styleClass="small"/>
-                <h:inputText id="factor" value="#{dlgController.factor}" styleClass="form-control" required="true">
-                    <f:validateDoubleRange minimum="0" maximum="1"/>
-                    <f:ajax execute="@this"/>
-                </h:inputText>
+                <div class="col-xs-3">
+                    <h:outputLabel for="factor" value="Фактор:" styleClass="small"/>
+                    <h:inputText id="factor" value="#{dlgController.factor}" styleClass="form-control" required="true"
+                                 requiredMessage="Обязательно для заполнения">
+                        <f:validateDoubleRange minimum="0" maximum="1"/>
+                    </h:inputText>
+                    <div class="form-control-feedback small text-danger"><h:message for="factor"/></div>
+                </div>
             </div>
+        </div>
 
-            <div class="form-group">
-                <h:outputLabel for="color" value="Цвет:" styleClass="small"/>
-                <h:inputText id="color" value="#{dlgController.color}" styleClass="form-control"/>
-            </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h:outputLabel for="icon" value="Иконка" styleClass="small"/>
+                    <div id="icon_input" class="input-group icon_input">
+                        <h:inputText id="icon" value="#{dlgController.icon}" styleClass="form-control" data-placement="bottomRight"/>
+                        <div class="input-group-addon pr-26px"></div>
+                    </div>
 
-            <div class="form-group">
-                <h:outputLabel for="icon" value="Иконка" styleClass="small"/>
-                <h:inputText id="icon" value="#{dlgController.icon}" styleClass="form-control"/>
-            </div>
+                    <script>
+                        $(function () {
+                            $('.icon_input').iconpicker();
+                        });
+                    </script>
+                </div>
 
-            <div class="form-group">
-                <h:outputLabel for="description" value="Описание:" styleClass="small"/>
-                <h:inputTextarea id="description" value="#{dlgController.description}" cols="3" styleClass="form-control">
-                    <f:ajax execute="@this"/>
-                </h:inputTextarea>
+                <div class="col-xs-6">
+                    <h:outputLabel for="icon_color" value="Цвет:" styleClass="small"/>
+                    <div id="icon_color_input" class="input-group icon_color_input">
+                        <h:inputText id="icon_color" value="#{dlgController.iconColor}" styleClass="form-control"/>
+                        <div class="input-group-addon pr-26px"><i class="mt-2px"></i></div>
+                    </div>
+
+                    <script>
+                        $(function() {
+                            $('.icon_color_input').colorpicker({format: 'hex'});
+                        });
+                    </script>
+                </div>
             </div>
-        <!--</h:form>-->
+        </div>
+
+        <div class="form-group">
+            <h:outputLabel for="description" value="Описание:" styleClass="small"/>
+            <h:inputTextarea id="description" value="#{dlgController.description}" cols="3" styleClass="form-control"/>
+        </div>
     </ui:define>
 
     <ui:define name="dlg-footer">
-        <!--<h:form>-->
-            <h:commandButton styleClass="btn btn-success mr-1" action="#{dlgController.submit()}">
-                <inf:icon value="fa-check"/>
-                <span>Создать</span>
-                <f:ajax/>
-            </h:commandButton>
+        <h:commandLink action="#{dlgController.submit()}" styleClass="btn btn-success mr-1">
+            <inf:icon value="fa-check"/>
+            <span>Создать</span>
+            <f:ajax execute="@form" render="@form #{update}"/>
+        </h:commandLink>
 
-            <h:commandLink onclick="$(#{dlgId}).modal('hide');" styleClass="btn btn-danger">
-                <inf:icon value="fa-check"/>
-                <span>Отмена</span>
-                <f:ajax execute="@form" render="@form"/>
-            </h:commandLink>
-        <!--</h:form>-->
+        <h:commandLink action="#{dlgController.cancel()}" onclick="$(#{dlgId}).modal('hide');" styleClass="btn btn-danger">
+            <inf:icon value="fa-close"/>
+            <span>Отмена</span>
+            <f:ajax execute="@this" render="@form"/>
+        </h:commandLink>
     </ui:define>
-
 
 </ui:composition>

@@ -2,8 +2,13 @@
                 xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:inf="http://onbrains.org/onwork/inf">
 
-    <ui:define name="head">
+    <ui:define name="header">
         <title>Типы дней</title>
+
+        <h:outputStylesheet name="style/colorpicker/css/bootstrap-colorpicker.min.css"/>
+        <h:outputStylesheet name="style/iconpicker/css/fontawesome-iconpicker.min.css"/>
+        <h:outputScript name="style/colorpicker/js/bootstrap-colorpicker.min.js"/>
+        <h:outputScript name="style/iconpicker/js/fontawesome-iconpicker.min.js"/>
     </ui:define>
 
     <ui:define name="pagePath">
@@ -30,7 +35,13 @@
                 <div class="tab-content">
                     <div id="day_types" class="tab-pane fade in active">
                         <h:dataTable id="day_types_table" value="#{dayTypeDirectoryVC.types}" var="type" styleClass="table">
-                            <h:column width="30%">
+                            <h:column width="10%">
+                                <div class="text-xs-center">
+                                    <inf:icon value="#{type.icon}" style="color: #{type.iconColor}" styleClass="fa-lg"/>
+                                </div>
+                            </h:column>
+
+                            <h:column width="40%">
                                 <f:facet name="header">Название</f:facet>
                                 <h:outputText value="#{type.objectName}"/>
                             </h:column>
@@ -40,27 +51,19 @@
                                 <h:outputText value="#{type.factor}"/>
                             </h:column>
 
-                            <h:column width="10%">
-                                <f:facet name="header">Цвет</f:facet>
-                                <h:outputText value="#{type.color}"/>
-                            </h:column>
-
-                            <h:column width="20%">
-                                <f:facet name="header">Иконка</f:facet>
-                                <h:outputText value="#{type.icon}"/>
-                            </h:column>
-
-                            <h:column width="40%">
+                            <h:column width="50%">
                                 <f:facet name="header">Описание</f:facet>
                                 <h:outputText value="#{type.description}"/>
                             </h:column>
 
                             <h:column width="50px">
                                 <f:facet name="header">
-									<h:commandLink styleClass="btn float-lg-right" onclick="showDlg('day_type_edit_dlg_id')"
+									<h:commandLink styleClass="btn float-lg-right" onclick="showDlg('day_type_edit_dlg')"
 												   immediate="true">
 										<inf:icon value="fa-plus-circle" styleClass="fa-lg text-success"/>
 										<f:ajax execute="@this"/>
+
+                                        <f:setPropertyActionListener value="#{dayTypeDirectoryVC.callback}" target="#{dayTypeEditDC.callback}"/>
 									</h:commandLink>
                                 </f:facet>
 
@@ -73,8 +76,13 @@
 
                     <div id="work_day_types" class="tab-pane fade">
                         <h:dataTable id="work_day_types_table" value="#{workDayTypeDirectoryVC.types}" var="type" styleClass="table">
+                            <h:column width="10%">
+                                <div class="text-xs-center">
+                                    <inf:icon value="#{type.icon}" style="color: #{type.iconColor}" styleClass="fa-lg"/>
+                                </div>
+                            </h:column>
 
-                            <h:column width="30%">
+                            <h:column width="40%">
                                 <f:facet name="header">Название</f:facet>
                                 <h:outputText value="#{type.objectName}"/>
                             </h:column>
@@ -84,33 +92,25 @@
                                 <h:outputText value="#{type.factor}"/>
                             </h:column>
 
-                            <h:column width="10%">
-                                <f:facet name="header">Цвет</f:facet>
-                                <h:outputText value="#{type.color}"/>
-                            </h:column>
-
-                            <h:column width="20%">
-                                <f:facet name="header">Иконка</f:facet>
-                                <h:outputText value="#{type.icon}"/>
-                            </h:column>
-
-                            <h:column width="40%">
+                            <h:column width="50%">
                                 <f:facet name="header">Описание</f:facet>
                                 <h:outputText value="#{type.description}"/>
                             </h:column>
 
                             <h:column width="50px">
                                 <f:facet name="header">
-                                    <h:commandLink styleClass="btn float-lg-right" onclick="showDlg('work_day_type_edit_dlg_id')"
+                                    <h:commandLink styleClass="btn float-lg-right" onclick="showDlg('work_day_type_edit_dlg')"
                                                    immediate="true">
+                                        <inf:icon value="fa-plus-circle" styleClass="fa-lg text-success"/>
                                         <f:ajax execute="@this"/>
-                                        <i class="fa fa-plus-circle fa-lg text-success"></i>
+
+                                        <f:setPropertyActionListener value="#{workDayTypeDirectoryVC.callback}" target="#{workDayTypeEditDC.callback}"/>
                                     </h:commandLink>
                                 </f:facet>
-                                <h:commandLink styleClass="btn float-lg-right" action="#{workDayTypeDirectoryVC.remove(type)}"
-                                               rendered="#{not type.sys}">
-                                    <i class="fa fa-trash-o fa-lg text-danger"></i>
-                                </h:commandLink>
+
+                                <inf:commandLink action="#{workDayTypeDirectoryVC.remove(type)}" rendered="#{not type.sys}"
+                                                 styleClass="btn float-lg-right" icon="fa-trash-o" iconStyleClass="fa-lg text-danger"
+                                                 process="@this" update="day_type_directory_form:work_day_types_table"/>
                             </h:column>
                         </h:dataTable>
                     </div>
@@ -123,17 +123,17 @@
 
     <ui:define name="dialogs">
         <ui:include src="DayTypeEditDialog.xhtml">
-            <ui:param name="dlgId" value="day_type_edit_dlg_id"/>
+            <ui:param name="dlgId" value="day_type_edit_dlg"/>
             <ui:param name="dlgFormId" value="day_type_edit_dlg_form"/>
-            <ui:param name="bodyId" value="day_type_edit_form"/>
 			<ui:param name="update" value="day_type_directory_form:day_types_table"/>
             <ui:param name="dlgController" value="#{dayTypeEditDC}"/>
         </ui:include>
 
+
         <ui:include src="DayTypeEditDialog.xhtml">
-            <ui:param name="dlgId" value="work_day_type_edit_dlg_id"/>
+            <ui:param name="dlgId" value="work_day_type_edit_dlg"/>
 			<ui:param name="dlgFormId" value="work_day_type_edit_dlg_form"/>
-			<ui:param name="bodyId" value="work_day_type_edit_form"/>
+            <ui:param name="update" value="day_type_directory_form:work_day_types_table"/>
             <ui:param name="dlgController" value="#{workDayTypeEditDC}"/>
         </ui:include>
     </ui:define>

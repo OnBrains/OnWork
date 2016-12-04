@@ -1,6 +1,5 @@
 package org.onbrains.onwork.env.day;
 
-import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,7 +22,8 @@ public class DayTypeEditDialogController extends AbstractDayTypeEditDialogContro
 
 	@Override
 	protected void create() {
-		dtr.create(getName(), getFactor(), getColor(), getIcon(), getDescription());
+		DayType dayType = dtr.create(getName(), getFactor(), getIcon(), getIconColor(), getDescription());
+		getCallback().execute(dayType);
 	}
 
 }

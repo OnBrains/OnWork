@@ -27,6 +27,7 @@ public class WorkDayType extends AbstractDayType {
 
 	public WorkDayType(Long id) {
 		super(id);
+		setSys(false);
 	}
 
 }
