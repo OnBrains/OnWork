@@ -74,6 +74,7 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 		editableType.setName(name);
 		editableType.setFactor(factor);
 		editableType.setIcon(icon);
+		editableType.setIconColor(iconColor);
 		editableType.setDescription(description);
 	}
 

@@ -14,6 +14,7 @@ import org.onbrains.onwork.env.day.model.DayType;
  */
 @Named(value = "dayTypeEditDC")
 @ViewScoped
+@Transactional
 public class DayTypeEditDialogController extends AbstractDayTypeEditDialogController<DayType> {
 
 	private static final long serialVersionUID = -1980386256232164089L;
@@ -28,7 +29,6 @@ public class DayTypeEditDialogController extends AbstractDayTypeEditDialogContro
 	}
 
 	@Override
-	@Transactional(Transactional.TxType.REQUIRES_NEW)
 	protected void update() {
 		super.update();
 		em.merge(getEditableObject());
