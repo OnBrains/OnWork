@@ -29,7 +29,7 @@ public abstract class AbstractDayType extends BusinessDirectory {
 	@Column(nullable = false)
 	private Float factor;
 
-	@Column(length = 16)
+	@Column(length = 64)
 	private String icon;
 
 	@Column(name = "icon_color", length = 16)
