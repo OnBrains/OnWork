@@ -2,6 +2,7 @@ package org.onbrains.onwork.env.event.model;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 
@@ -20,6 +21,7 @@ public class FixedTimeEventType extends AbstractEventType {
 
 	public static final String FIND_ALL = "FixedTimeEventType.findAll";
 
+	@Column(name = "fixed_time")
 	private Long fixedTime;
 
 	protected FixedTimeEventType() {

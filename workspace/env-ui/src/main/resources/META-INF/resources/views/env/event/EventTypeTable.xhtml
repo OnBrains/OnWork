@@ -1,0 +1,49 @@
+<ui:composition xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:inf="http://onbrains.org/onwork/inf">
+
+    <h:dataTable id="#{tableId}" value="#{types}" var="type" styleClass="table">
+        <h:column width="10%">
+            <div class="text-xs-center">
+                <inf:icon value="#{type.icon}" style="color: #{type.iconColor}" styleClass="fa-lg"/>
+            </div>
+        </h:column>
+
+        <h:column width="40%">
+            <f:facet name="header">Название</f:facet>
+            <h:commandLink value="#{type.objectName}" onclick="showDlg('#{dlgId}')">
+                <f:ajax execute="@this" render="#{dlgFormId}"/>
+                <f:setPropertyActionListener value="#{type}" target="#{editableObject}"/>
+            </h:commandLink>
+        </h:column>
+
+        <h:column width="10%" rendered="#{withFixedTime}">
+            <f:facet name="header">Время</f:facet>
+            <h:outputText value="#{type.fixedTime}"/>
+        </h:column>
+
+        <h:column width="#{not withFixedTime ? '60%' : '50%'}">
+            <f:facet name="header">Описание</f:facet>
+            <h:outputText value="#{type.description}"/>
+        </h:column>
+
+        <h:column width="50px">
+            <f:facet name="header">
+                <h:commandLink styleClass="btn float-lg-right" onclick="showDlg('#{dlgId}')">
+                    <inf:icon value="fa-plus-circle" styleClass="fa-lg text-success"/>
+                    <f:ajax execute="@this"/>
+                    <f:setPropertyActionListener value="#{callback}" target="#{callbackTarget}"/>
+                </h:commandLink>
+            </f:facet>
+
+            <!--FIXME: не видит directoryController-->
+            <!--<inf:commandLink action="#{directoryController.remove(type)}" rendered="#{not type.sys}"-->
+                             <!--styleClass="btn float-lg-right" icon="fa-trash-o" iconStyleClass="fa-lg text-danger"-->
+                             <!--process="@this" update="event_type_directory_form:#{tableId}"/>-->
+            <h:commandLink action="#{directoryController.remove(type)}" styleClass="btn float-lg-right" rendered="#{not type.sys}">
+                <inf:icon value="fa-trash-o" styleClass="fa-lg text-danger"/>
+                <f:ajax execute="@this" render="event_type_directory_form:#{tableId}"/>
+            </h:commandLink>
+        </h:column>
+    </h:dataTable>
+
+</ui:composition>

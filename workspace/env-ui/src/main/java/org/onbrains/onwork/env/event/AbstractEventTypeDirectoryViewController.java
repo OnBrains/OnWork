@@ -33,8 +33,9 @@ public abstract class AbstractEventTypeDirectoryViewController<T extends Abstrac
 		return (type -> types.add(type));
 	}
 
-	@Transactional(Transactional.TxType.REQUIRES_NEW)
+	@Transactional
 	public void remove(T type) {
+		// TODO: деактивировать если используется
 		types.remove(type);
 		em.remove(em.merge(type));
 	}

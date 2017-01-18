@@ -4,6 +4,7 @@ CREATE TABLE system.event_type (
   icon        VARCHAR(64),
   icon_color  VARCHAR(16),
   description VARCHAR(512),
+  fixed_time  BIGINT,
   active      BOOLEAN      NOT NULL DEFAULT FALSE,
   sys         BOOLEAN      NOT NULL DEFAULT FALSE,
   dtype       VARCHAR(32)  NOT NULL,

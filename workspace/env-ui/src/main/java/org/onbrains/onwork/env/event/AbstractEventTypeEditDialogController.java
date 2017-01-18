@@ -14,7 +14,8 @@ import org.onbrains.onwork.util.EditDialogController;
  *
  * @author Oleg Naumov
  */
-public abstract class AbstractEventTypeEditDialogController<T extends AbstractEventType> implements EditDialogController<T>, Serializable {
+public abstract class AbstractEventTypeEditDialogController<T extends AbstractEventType>
+		implements EditDialogController<T>, Serializable {
 
 	private static final long serialVersionUID = -1266260116973706767L;
 

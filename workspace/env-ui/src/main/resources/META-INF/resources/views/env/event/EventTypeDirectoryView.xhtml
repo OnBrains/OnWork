@@ -1,0 +1,110 @@
+<ui:composition template="/views/inf/page/View.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:inf="http://onbrains.org/onwork/inf">
+
+    <ui:define name="header">
+        <title>Типы событий</title>
+
+        <h:outputStylesheet name="style/colorpicker/css/bootstrap-colorpicker.min.css"/>
+        <h:outputStylesheet name="style/iconpicker/css/fontawesome-iconpicker.min.css"/>
+        <h:outputScript name="style/colorpicker/js/bootstrap-colorpicker.min.js"/>
+        <h:outputScript name="style/iconpicker/js/fontawesome-iconpicker.min.js"/>
+    </ui:define>
+
+    <ui:define name="pagePath">
+        <li class="breadcrumb-item">Справочники</li>
+        <li class="breadcrumb-item active">Типы событий</li>
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form id="event_type_directory_form">
+
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs float-xs-left">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#event_types" data-toggle="tab">Общие</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#work_event_types" data-toggle="tab">Рабочие</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#fixed_time_event_types" data-toggle="tab">С фиксированным временем</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-content">
+                    <div id="event_types" class="tab-pane fade in active">
+                        <ui:include src="EventTypeTable.xhtml">
+                            <ui:param name="tableId" value="event_types_table"/>
+                            <ui:param name="types" value="#{eventTypeDirectoryVC.types}"/>
+                            <ui:param name="dlgId" value="event_type_edit_dlg"/>
+                            <ui:param name="dlgFormId" value="event_type_edit_form"/>
+                            <ui:param name="editableObject" value="#{eventTypeEditDC.editableObject}"/>
+                            <ui:param name="callback" value="#{eventTypeDirectoryVC.callback}"/>
+                            <ui:param name="callbackTarget" value="#{eventTypeEditDC.callback}"/>
+                            <ui:param name="directoryController" value="#{eventTypeDirectoryVC}"/>
+                        </ui:include>
+                    </div>
+
+                    <div id="work_event_types" class="tab-pane fade">
+                        <ui:include src="EventTypeTable.xhtml">
+                            <ui:param name="tableId" value="work_event_types_table"/>
+                            <ui:param name="types" value="#{workEventTypeDirectoryVC.types}"/>
+                            <ui:param name="dlgId" value="work_event_type_edit_dlg"/>
+                            <ui:param name="dlgFormId" value="work_event_type_edit_form"/>
+                            <ui:param name="editableObject" value="#{workEventTypeEditDC.editableObject}"/>
+                            <ui:param name="callback" value="#{workEventTypeDirectoryVC.callback}"/>
+                            <ui:param name="callbackTarget" value="#{workEventTypeEditDC.callback}"/>
+                            <ui:param name="directoryController" value="#{workEventTypeDirectoryVC}"/>
+                        </ui:include>
+                    </div>
+
+                    <div id="fixed_time_event_types" class="tab-pane fade">
+                        <ui:include src="EventTypeTable.xhtml">
+                            <ui:param name="tableId" value="fixed_time_event_types_table"/>
+                            <ui:param name="types" value="#{fixedTimeEventTypeDirectoryVC.types}"/>
+                            <ui:param name="dlgId" value="fixed_time_event_type_edit_dlg"/>
+                            <ui:param name="dlgFormId" value="fixed_time_event_type_edit_form"/>
+                            <ui:param name="editableObject" value="#{fixedTimeEventTypeEditDC.editableObject}"/>
+                            <ui:param name="callback" value="#{fixedTimeEventTypeDirectoryVC.callback}"/>
+                            <ui:param name="callbackTarget" value="#{fixedTimeEventTypeEditDC.callback}"/>
+                            <ui:param name="directoryController" value="#{fixedTimeEventTypeDirectoryVC}"/>
+                            <ui:param name="withFixedTime" value="true"/>
+                        </ui:include>
+                    </div>
+                </div>
+
+            </div>
+
+        </h:form>
+    </ui:define>
+
+    <ui:define name="dialogs">
+        <ui:include src="EventTypeEditDialog.xhtml">
+            <ui:param name="dlgId" value="event_type_edit_dlg"/>
+            <ui:param name="dlgFormId" value="event_type_edit_form"/>
+            <ui:param name="update" value="event_type_directory_form:event_types_table"/>
+            <ui:param name="dlgController" value="#{eventTypeEditDC}"/>
+        </ui:include>
+
+        <ui:include src="EventTypeEditDialog.xhtml">
+            <ui:param name="dlgId" value="work_event_type_edit_dlg"/>
+            <ui:param name="dlgFormId" value="work_event_type_edit_form"/>
+            <ui:param name="update" value="event_type_directory_form:work_event_types_table"/>
+            <ui:param name="dlgController" value="#{workEventTypeEditDC}"/>
+        </ui:include>
+
+        <ui:include src="EventTypeEditDialog.xhtml">
+            <ui:param name="dlgId" value="fixed_time_event_type_edit_dlg"/>
+            <ui:param name="dlgFormId" value="fixed_time_event_type_edit_form"/>
+            <ui:param name="update" value="event_type_directory_form:fixed_time_event_types_table"/>
+            <ui:param name="dlgController" value="#{fixedTimeEventTypeEditDC}"/>
+            <ui:param name="withFixedTime" value="true"/>
+        </ui:include>
+    </ui:define>
+
+</ui:composition>

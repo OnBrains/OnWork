@@ -1,0 +1,85 @@
+<ui:composition template="/views/inf/page/DialogFrame.xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:inf="http://onbrains.org/onwork/inf">
+
+    <ui:define name="dlg-title">
+        <h3>
+            <h:outputText value="#{dlgController.getHeader()}"/>
+        </h3>
+    </ui:define>
+
+    <ui:define name="dlg-body">
+        <div class="form-group">
+            <div class="row">
+                <div class="#{not withFixedTime ? 'col-xs-12' : 'col-xs-9'}">
+                    <h:outputLabel for="name" value="Наименование:" styleClass="small"/>
+                    <h:inputText id="name" value="#{dlgController.name}" styleClass="form-control" required="true" maxlength="128"
+                                 requiredMessage="Обязательно для заполнения" disabled="#{!dlgController.canEdit()}"/>
+                    <div class="form-control-feedback small text-danger"><h:message for="name"/></div>
+                </div>
+
+                <!--TODO: вводить время и конвертировать его в long-->
+                <ui:fragment rendered="#{withFixedTime}">
+                    <div class="col-xs-3">
+                        <h:outputLabel for="fixed_time" value="Время:" styleClass="small"/>
+                        <h:inputText id="fixed_time" value="#{dlgController.fixedTime}" styleClass="form-control" required="true"
+                                     requiredMessage="Обязательно для заполнения" disabled="#{!dlgController.canEdit()}"/>
+                        <div class="form-control-feedback small text-danger"><h:message for="fixed_time"/></div>
+                    </div>
+                </ui:fragment>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h:outputLabel for="icon" value="Иконка" styleClass="small"/>
+                    <div id="icon_input" class="input-group icon_input">
+                        <h:inputText id="icon" value="#{dlgController.icon}" styleClass="form-control" data-placement="bottomRight"/>
+                        <div class="input-group-addon pr-26px"></div>
+                    </div>
+
+                    <script>
+                        $(function () {
+                            $('.icon_input').iconpicker();
+                        });
+                    </script>
+                </div>
+
+                <div class="col-xs-6">
+                    <h:outputLabel for="icon_color" value="Цвет:" styleClass="small"/>
+                    <div id="icon_color_input" class="input-group icon_color_input">
+                        <h:inputText id="icon_color" value="#{dlgController.iconColor}" styleClass="form-control"/>
+                        <div class="input-group-addon pr-26px"><i class="mt-2px"></i></div>
+                    </div>
+
+                    <script>
+                        $(function() {
+                            $('.icon_color_input').colorpicker({format: 'hex'});
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h:outputLabel for="description" value="Описание:" styleClass="small"/>
+            <h:inputTextarea id="description" value="#{dlgController.description}" cols="3" styleClass="form-control"/>
+        </div>
+    </ui:define>
+
+    <ui:define name="dlg-footer">
+        <h:commandLink action="#{dlgController.submit()}" styleClass="btn btn-success mr-1">
+            <inf:icon value="fa-check"/>
+            <span>#{dlgController.getSubmitButtonLabel()}</span>
+            <f:ajax execute="@form" render="@form #{update}"/>
+        </h:commandLink>
+
+        <h:commandLink action="#{dlgController.cancel()}" onclick="$(#{dlgId}).modal('hide');" styleClass="btn btn-danger">
+            <inf:icon value="fa-close"/>
+            <span>Отмена</span>
+            <f:ajax execute="@this" render="@form"/>
+        </h:commandLink>
+    </ui:define>
+
+</ui:composition>

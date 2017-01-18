@@ -24,7 +24,7 @@ public class FixedTimeEventTypeEditDialogController extends AbstractEventTypeEdi
 	protected void create() {
 		FixedTimeEventType instance = etr.createFixedTimeEventType(getName(), getFixedTime(), getIcon(), getIconColor(),
 				getDescription());
-		em.persist(instance);
+		getCallback().execute(instance);
 	}
 
 	@Override
@@ -35,9 +35,15 @@ public class FixedTimeEventTypeEditDialogController extends AbstractEventTypeEdi
 	}
 
 	@Override
+	public void cancel() {
+		super.cancel();
+		fixedTime = null;
+	}
+
+	@Override
 	public void setEditableObject(FixedTimeEventType editableObject) {
 		super.setEditableObject(editableObject);
-		getEditableObject().setFixedTime(editableObject.getFixedTime());
+		fixedTime = editableObject.getFixedTime();
 	}
 
 	// *****************************************************************************************************************
