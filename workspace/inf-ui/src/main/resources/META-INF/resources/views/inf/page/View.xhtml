@@ -10,17 +10,37 @@
 	<ui:insert name="metadata"/>
 
 	<h:head>
+		<!-- Customer styles -->
 		<h:outputStylesheet name="style/inf/css/helper.css"/>
+		<h:outputStylesheet name="style/env/css/env-ui.css"/>
+
+		<!-- Bootstrap styles -->
 		<h:outputStylesheet name="style/bootstrap/css/bootstrap.min.css"/>
-		<h:outputStylesheet name="style/bootstrap/css/bootstrap-flex.min.css"/>
+		<!--<h:outputStylesheet name="style/bootstrap/css/bootstrap-flex.min.css"/>-->
 		<h:outputStylesheet name="style/bootstrap/css/bootstrap-grid.min.css"/>
+
+		<!-- Bootstrap extensions -->
+
+		<!-- Date time picker -->
+		<h:outputStylesheet name="style/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
+		<h:outputStylesheet name="style/datetimepicker/css/bootstrap-datetimepicker-standalone.min.css"/>
+
+		<!-- Fort awesome icons -->
 		<h:outputStylesheet name="webjars/font-awesome/4.7.0/css/font-awesome.css"/>
 
+		<!-- JQuery -->
 		<h:outputScript name="style/inf/js/jquery-3.1.1.min.js"/>
 		<h:outputScript name="style/inf/js/jquery-migrate-3.0.0.min.js"/>
+
+		<!-- Bootstrap scripts -->
 		<h:outputScript name="style/bootstrap/js/bootstrap.min.js"/>
 
+		<h:outputScript name="style/datetimepicker/js/moment-with-locales.min.js"/>
+		<h:outputScript name="style/datetimepicker/js/bootstrap-datetimepicker.min.js"/>
+
+		<!-- Customer scripts -->
 		<h:outputScript name="style/inf/js/inf.js"/>
+
 		<ui:insert name="header"/>
 	</h:head>
 

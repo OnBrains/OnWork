@@ -1,0 +1,116 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:cc="http://java.sun.com/jsf/composite" xmlns:h="http://java.sun.com/jsf/html"
+			  xmlns:c="http://java.sun.com/jstl/core" xmlns:f="http://java.sun.com/jsf/core">
+
+    <cc:interface name="dtPicker">
+		<cc:attribute name="id" type="java.lang.String" required="true"/>
+		<cc:attribute name="value" type="java.lang.Object"/>
+		<cc:attribute name="required" type="java.lang.Boolean"/>
+		<cc:attribute name="disabled" type="java.lang.Boolean"/>
+		<cc:attribute name="requiredMessage" type="java.lang.String"/>
+        <cc:attribute name="format" type="java.lang.String" default="DD.MM.YYYY"/>
+        <cc:attribute name="selectMode" type="java.lang.String" default="days"
+                      shortDescription="Possible select modes: days (default), months, years, time, datetime"/>
+        <cc:attribute name="showToday" type="java.lang.Boolean" default="false" shortDescription="Show today button"/>
+        <cc:attribute name="showClear" type="java.lang.Boolean" default="false" shortDescription="Show clear button"/>
+        <cc:attribute name="showClose" type="java.lang.Boolean" default="false" shortDescription="Show close button"/>
+        <cc:attribute name="locale" type="java.lang.String" default="ru"/>
+        <cc:attribute name="style" type="java.lang.String"/>
+        <cc:attribute name="styleClass" type="java.lang.String"/>
+    </cc:interface>
+
+    <cc:implementation>
+
+		<c:set var="containerId" value="#{cc.attrs.id}_conainer"/>
+
+		<!-- Set default format by select mode -->
+		<c:choose>
+			<c:when test="#{cc.attrs.selectMode eq 'days'}">
+				<c:set var="format" value="DD.MM.YYYY"/>
+				<c:set var="viewMode" value="days"/>
+			</c:when>
+
+			<c:when test="#{cc.attrs.selectMode eq 'months'}">
+				<c:set var="format" value="MMM YYYY"/>
+				<c:set var="viewMode" value="months"/>
+			</c:when>
+
+			<c:when test="#{cc.attrs.selectMode eq 'years'}">
+				<c:set var="format" value="YYYY"/>
+				<c:set var="viewMode" value="years"/>
+			</c:when>
+
+			<c:when test="#{cc.attrs.selectMode eq 'time'}">
+				<c:set var="format" value="HH:mm"/>
+				<c:set var="viewMode" value="days"/>
+			</c:when>
+
+			<c:when test="#{cc.attrs.selectMode eq 'datetime'}">
+				<c:set var="format" value="DD.MM.YYYY HH:mm"/>
+				<c:set var="viewMode" value="days"/>
+			</c:when>
+
+			<c:otherwise>
+				<c:set var="format" value="#{cc.attrs.format}"/>
+			</c:otherwise>
+		</c:choose>
+
+		<!-- Component -->
+
+		<div class="input-group date" id="#{containerId}">
+			<h:inputText id="#{cc.attrs.id}" value="#{cc.attrs.value}" styleClass="form-control" disabled="#{cc.attrs.disabled}"
+						 required="#{cc.attrs.required}" requiredMessage="#{cc.attrs.requiredMessage}">
+
+				<cc:insertChildren/>
+
+				<c:choose>
+					<c:when test="#{cc.attrs.selectMode eq 'days'}">
+						<f:converter converterId="DateConverter"/>
+					</c:when>
+
+					<c:when test="#{cc.attrs.selectMode eq 'months'}">
+						<f:converter converterId="MonthConverter"/>
+					</c:when>
+
+					<c:when test="#{cc.attrs.selectMode eq 'years'}">
+						<f:converter converterId="YearConverter"/>
+					</c:when>
+
+					<c:when test="#{cc.attrs.selectMode eq 'time'}">
+						<f:converter converterId="TimeConverter"/>
+					</c:when>
+
+					<c:when test="#{cc.attrs.selectMode eq 'time'}">
+						<f:converter converterId="DateTimeConverter"/>
+					</c:when>
+
+					<c:otherwise>
+						<f:converter converterId="DateConverter"/>
+					</c:otherwise>
+				</c:choose>
+			</h:inputText>
+			<div class="input-group-addon">
+				<i class="fa fa-calendar"></i>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+
+			$(function () {
+
+				var containerId = '#' + '#{containerId}';
+
+				$(containerId).datetimepicker({
+					viewMode: '#{viewMode}',
+					format: '#{format}',
+					showTodayButton: #{cc.attrs.showToday},
+					showClear: #{cc.attrs.showClear},
+					showClose: #{cc.attrs.showClose},
+					useCurrent: false,
+					locale: 'ru'
+				});
+			});
+		</script>
+    </cc:implementation>
+
+</ui:component>
