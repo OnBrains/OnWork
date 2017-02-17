@@ -1,6 +1,6 @@
 <ui:composition template="/views/inf/page/View.xhtml" xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:inf="http://onbrains.org/onwork/inf">
 
     <ui:define name="header">
         <title>Справочник дней</title>
@@ -25,11 +25,22 @@
 
                         <div class="col-md-4">
                             <div class="btn-group float-lg-right" role="group">
-                                <h:commandLink styleClass="btn float-lg-right" action="#{dayDirectoryVM.previousMonth()}">
+                                <h:commandLink styleClass="btn float-lg-right" onclick="showDlg('factory_calendar_creation_dlg')">
+                                    <f:ajax execute="@this" render="days_table panel_header"/>
+                                    <i class="fa fa-cog fa-lg text-area"></i>
+                                </h:commandLink>
+
+                                <h:commandLink styleClass="btn float-lg-right" onclick="showDlg('factory_calendar_edit_dlg')">
+                                    <f:ajax execute="@this" render="days_table panel_header"/>
+                                    <i class="fa fa-pencil fa-lg text-area"></i>
+                                </h:commandLink>
+
+                                <h:commandLink styleClass="btn float-lg-right" action="#{dayDirectoryVM.nextMonth()}">
                                     <i class="fa fa-chevron-right fa-lg text-success"></i>
                                     <f:ajax execute="@this" render="days_table panel_header"/>
                                 </h:commandLink>
-                                <h:commandLink styleClass="btn float-lg-right" action="#{dayDirectoryVM.nextMonth()}">
+
+                                <h:commandLink styleClass="btn float-lg-right" action="#{dayDirectoryVM.previousMonth()}">
                                     <f:ajax execute="@this" render="days_table panel_header"/>
                                     <i class="fa fa-chevron-left fa-lg text-success"></i>
                                 </h:commandLink>
@@ -38,22 +49,20 @@
                     </div>
                 </div>
 
-                <h:commandButton value="Create days" action="#{dayDirectoryVM.createDaysForYear()}" process="@this"
-                                 update="day_directory_form" rendered="#{not dayDirectoryVM.yearHaveDays}"/>
+                <h:dataTable id="days_table" value="#{dayDirectoryVM.days}" var="day" styleClass="table">
 
-                <h:dataTable id="days_table" value="#{dayDirectoryVM.days}" var="day" styleClass="table" scrollable="true" scrollHeight="400">
+                    <h:column width="5%">
+                        <div class="text-xs-center">
+                            <inf:icon value="#{day.type.icon}" style="color: #{day.type.iconColor}" styleClass="fa-lg"/>
+                        </div>
+                    </h:column>
 
-                    <h:column width="20%">
+                    <h:column width="35%">
                         <f:facet name="header">День</f:facet>
                         <h:outputText value="#{dateFormat.toDDEE(day.value).toLowerCase()}"/>
                     </h:column>
 
-                    <h:column width="30%">
-                        <f:facet name="header">Тип</f:facet>
-                        <h:outputText value="#{day.type.objectName}"/>
-                    </h:column>
-
-                    <h:column width="50%">
+                    <h:column width="60%">
                         <f:facet name="header">Описание</f:facet>
                         <h:outputText value="#{day.description}"/>
                     </h:column>
@@ -62,6 +71,20 @@
             </div>
 
         </h:form>
+    </ui:define>
+
+    <ui:define name="dialogs">
+        <ui:include src="FactoryCalendarCreationDialog.xhtml">
+            <ui:param name="dlgId" value="factory_calendar_creation_dlg"/>
+            <ui:param name="dlgFormId" value="factory_calendar_creation_form"/>
+            <ui:param name="update" value="day_directory_form"/>
+        </ui:include>
+
+        <ui:include src="DayEditDialog.xhtml">
+            <ui:param name="dlgId" value="factory_calendar_edit_dlg"/>
+            <ui:param name="dlgFormId" value="factory_calendar_edit_form"/>
+            <ui:param name="update" value="day_directory_form"/>
+        </ui:include>
     </ui:define>
 
 </ui:composition>

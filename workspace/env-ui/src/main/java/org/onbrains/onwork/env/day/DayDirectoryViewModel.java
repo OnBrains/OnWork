@@ -1,8 +1,11 @@
 package org.onbrains.onwork.env.day;
 
+import static org.onbrains.onwork.env.day.model.DayType.HOLIDAY;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -11,11 +14,6 @@ import javax.inject.Named;
 
 import org.onbrains.onwork.env.day.model.Day;
 
-/**
- * Created on 13.11.2016 20:49.
- *
- * @author Oleg Naumov
- */
 @Named(value = "dayDirectoryVM")
 @ViewScoped
 public class DayDirectoryViewModel implements Serializable {
@@ -28,7 +26,6 @@ public class DayDirectoryViewModel implements Serializable {
 	private LocalDate selectedMonth;
 
 	private List<Day> days;
-	private Boolean yearHaveDays;
 
 	@PostConstruct
 	protected void postConstruct() {
@@ -41,18 +38,6 @@ public class DayDirectoryViewModel implements Serializable {
 		return days;
 	}
 
-	// TODO: создавать дни для конкретного года
-	public void createDaysForYear() {
-		dr.createDays(LocalDate.now().getYear());
-	}
-
-	// TODO: проверять дни для конкретного года
-	public boolean isYearHaveDays() {
-		if (yearHaveDays == null)
-			yearHaveDays = dr.countDaysOf(LocalDate.now()) != 0;
-		return yearHaveDays;
-	}
-
 	public void nextMonth() {
 		selectedMonth = selectedMonth.plusMonths(1);
 		days = null;
@@ -63,6 +48,10 @@ public class DayDirectoryViewModel implements Serializable {
 		days = null;
 	}
 
+	public String getStyleClassForRow(Day day) {
+		return day != null && !Objects.equals(HOLIDAY, day.getType().getId()) ? "" : "holiday";
+	}
+
 	// *****************************************************************************************************************
 	// Simple getters and setters
 	// *****************************************************************************************************************
@@ -71,13 +60,4 @@ public class DayDirectoryViewModel implements Serializable {
 		return selectedMonth;
 	}
 
-	private List<Day> selectedDays;
-
-	public List<Day> getSelectedDays() {
-		return selectedDays;
-	}
-
-	public void setSelectedDays(List<Day> selectedDays) {
-		this.selectedDays = selectedDays;
-	}
 }

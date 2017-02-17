@@ -25,7 +25,8 @@ import org.onbrains.onwork.inf.modelbase.BusinessObject;
 //@formatter:off
 @NamedQueries({
 		@NamedQuery(name = Day.FIND_DAYS_OF_MONTH, query = "select d from Day d where to_char(d.value, 'yyyyMM') = to_char(cast(:month as date), 'yyyyMM')"),
-		@NamedQuery(name = Day.COUNT_DAYS_OF_YEAR, query = "select count(*) from Day d where to_char(d.value, 'yyyy') =  to_char(cast(:year as date), 'yyyy')")
+		@NamedQuery(name = Day.COUNT_DAYS_OF_YEAR, query = "select count(*) from Day d where to_char(d.value, 'yyyy') =  :year"),
+		@NamedQuery(name = Day.FIND_DAY, query = "select d from Day d where d.value = :date")
 })
 //@formatter:on
 public class Day extends BusinessObject {
@@ -33,6 +34,7 @@ public class Day extends BusinessObject {
 	private static final long serialVersionUID = 1633044954816711718L;
 
 	public static final String FIND_DAYS_OF_MONTH = "findDaysOfMonth";
+	public static final String FIND_DAY = "findDay";
 	public static final String COUNT_DAYS_OF_YEAR = "countDaysOfYear";
 
 	@Column(nullable = false, updatable = false)

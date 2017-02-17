@@ -26,7 +26,7 @@ public class DateFormatUtils implements Serializable {
 	//@formatter:off
 	private static final Map<Long, String> MONTH_NAME_MAP = ImmutableMap.<Long, String>builder()
 			.put(1L, "Январь")
-			.put(2L, "Фавраль")
+			.put(2L, "Февраль")
 			.put(3L, "Март")
 			.put(4L, "Апрель")
 			.put(5L, "Май")

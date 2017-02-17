@@ -7,11 +7,13 @@ import static org.onbrains.onwork.env.day.model.DayType.WORK_DAY;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.validation.constraints.NotNull;
 
 import org.onbrains.onwork.env.day.model.Day;
@@ -40,8 +42,8 @@ public class DayRepository implements Serializable {
 	@Inject
 	private IdSequenceService idSequence;
 
-	public void createDays(@NotNull int year) {
-		LocalDate dayOfYear = LocalDate.of(year, 1, 1);
+	public void createDays(@NotNull Year year) {
+		LocalDate dayOfYear = LocalDate.of(year.getValue(), 1, 1);
 		LocalDate lastDayOfYear = dayOfYear.with(lastDayOfYear());
 
 		DayType workDay = em.find(DayType.class, WORK_DAY);
@@ -59,9 +61,17 @@ public class DayRepository implements Serializable {
 		return em.createNamedQuery(Day.FIND_DAYS_OF_MONTH, Day.class).setParameter("month", month).getResultList();
 	}
 
-	public long countDaysOf(LocalDate year) {
-		return Long.valueOf(
-				em.createNamedQuery(Day.COUNT_DAYS_OF_YEAR).setParameter("year", year).getSingleResult().toString());
+	public Day find(LocalDate date) {
+		try {
+			return em.createNamedQuery(Day.FIND_DAY, Day.class).setParameter("date", date).getSingleResult();
+		} catch (NoResultException ex) {
+			return null;
+		}
+	}
+
+	public long countDaysOf(Year year) {
+		return Long.valueOf(em.createNamedQuery(Day.COUNT_DAYS_OF_YEAR).setParameter("year", year.toString())
+				.getSingleResult().toString());
 	}
 
 	// *****************************************************************************************************************

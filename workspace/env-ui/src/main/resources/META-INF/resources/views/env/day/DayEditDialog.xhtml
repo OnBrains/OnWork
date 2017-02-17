@@ -1,0 +1,54 @@
+<ui:composition template="/views/inf/page/DialogFrame.xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:inf="http://onbrains.org/onwork/inf">
+
+    <ui:define name="dlg-title">
+        <h3>
+            <h:outputText value="Редактирование календаря"/>
+        </h3>
+    </ui:define>
+
+    <ui:define name="dlg-body">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-6">
+                    <h:outputLabel for="from" value="Дни для редактирования:" styleClass="small"/>
+                    <inf:datetimePicker id="from" value="#{dayEditDC.newFromDate}" selectMode="days"
+                                        showClear="true" showClose="true" required="true" requiredMessage="Обязательно для заполнения"/>
+                    <div class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:from:from"/></div>
+                </div>
+
+                <h:panelGroup id="test">
+                    <div class="col-xs-6">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <h:commandLink action="#{dayEditDC.toggleIntervalMode()}" class="btn btn-secondary">
+                                    <f:ajax execute="@this" render="test"/>
+                                    <inf:icon value="#{dayEditDC.interval ? 'fa-close' : 'fa-check'}"/>
+                                </h:commandLink>
+                            </span>
+                            <inf:datetimePicker id="to" value="#{dayEditDC.newToDate}" selectMode="days" disabled="#{not dayEditDC.interval}"
+                                                showClear="true" showClose="true" required="true" requiredMessage="Обязательно для заполнения"/>
+                        </div>
+                        <div class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:from:from"/></div>
+                    </div>
+                </h:panelGroup>
+            </div>
+        </div>
+    </ui:define>
+
+    <ui:define name="dlg-footer">
+        <h:commandLink action="#{dayEditDC.submit()}" styleClass="btn btn-success mr-1">
+            <inf:icon value="fa-check"/>
+            <span>Сохранить</span>
+            <f:ajax execute="@form" render="@form #{update}"/>
+        </h:commandLink>
+
+        <h:commandLink action="#{dayEditDC.cancel()}" onclick="$(#{dlgId}).modal('hide');" styleClass="btn btn-danger">
+            <inf:icon value="fa-close"/>
+            <span>Отмена</span>
+            <f:ajax execute="@this" render="@form"/>
+        </h:commandLink>
+    </ui:define>
+
+</ui:composition>

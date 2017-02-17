@@ -1,0 +1,40 @@
+<ui:composition template="/views/inf/page/DialogFrame.xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:inf="http://onbrains.org/onwork/inf">
+
+    <ui:define name="dlg-title">
+        <h3>
+            <h:outputText value="Заведение производственного календаря"/>
+        </h3>
+    </ui:define>
+
+    <ui:define name="dlg-body">
+            <h:outputLabel for="year" value="Выберите год:" styleClass="small"/>
+            <inf:datetimePicker id="year" value="#{factoryCalendarCreationDC.newYear}" selectMode="years"
+                                showClear="true" showClose="true" required="true" requiredMessage="Обязательно для заполнения"/>
+            <div class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:year:year"/></div>
+    </ui:define>
+
+    <ui:define name="dlg-footer">
+        <h:commandLink action="#{factoryCalendarCreationDC.create()}" styleClass="btn btn-success mr-1" onclick="close">
+            <inf:icon value="fa-check"/>
+            <span>Создать</span>
+            <f:ajax execute="@form" render="@form #{update}"/>
+        </h:commandLink>
+
+        <h:commandLink action="#{factoryCalendarCreationDC.cancel()}" onclick="$(#{dlgId}).modal('hide');" styleClass="btn btn-danger">
+            <inf:icon value="fa-close"/>
+            <span>Отмена</span>
+            <f:ajax execute="@this" render="@form"/>
+        </h:commandLink>
+    </ui:define>
+
+    <script>
+        function close(data) {
+            if (data.status == "success") {
+                $(#{dlgId}).modal('hide');
+            }
+        }
+    </script>
+
+</ui:composition>
