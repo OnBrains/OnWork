@@ -16,7 +16,7 @@ import org.onbrains.onwork.env.workday.model.WorkDayType;
 @Named(value = "workDayTypeEditDC")
 @ViewScoped
 //@Transactional
-public class WorkDayTypeEditViewController extends AbstractDayTypeEditDialogController<WorkDayType> {
+public class WorkDayTypeEditDialogController extends AbstractDayTypeEditDialogController<WorkDayType> {
 
 	private static final long serialVersionUID = -5103080761051783088L;
 
