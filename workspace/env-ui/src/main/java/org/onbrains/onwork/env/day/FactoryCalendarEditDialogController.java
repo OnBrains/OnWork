@@ -2,8 +2,9 @@ package org.onbrains.onwork.env.day;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -28,6 +29,9 @@ public class FactoryCalendarEditDialogController implements Serializable {
 	@Inject
 	private DayRepository dr;
 
+	@Inject
+	private DayTypeRepository dtr;
+
 	private Boolean interval = false;
 
 	private LocalDate newFromDate;
@@ -35,7 +39,8 @@ public class FactoryCalendarEditDialogController implements Serializable {
 	private String newDescription;
 	private DayType newType;
 
-	private Set<Day> days = new HashSet<>();
+	private List<DayType> types;
+	private List<Day> days = new ArrayList<>();
 
 	@Transactional
 	public void submit() {
@@ -47,6 +52,8 @@ public class FactoryCalendarEditDialogController implements Serializable {
 			changeSingleDay();
 		else
 			changeSeveralDays();
+
+		Collections.sort(days, (d1, d2) -> d1.getValue().compareTo(d2.getValue()));
 	}
 
 	public void toggleIntervalMode() {
@@ -59,40 +66,51 @@ public class FactoryCalendarEditDialogController implements Serializable {
 		newToDate = null;
 		newDescription = null;
 		newType = null;
+		days.clear();
+	}
+
+	public List<DayType> getTypes() {
+		if (types == null)
+			types = dtr.findAll();
+		return types;
 	}
 
 	// *****************************************************************************************************************
 	// Private methods
 	// *****************************************************************************************************************
 
+	// TODO: change work day that dependent from this day and they types are equals
 	private void changeSingleDay() {
 		Day day = dr.find(newFromDate);
-		setNewValues(day);
-		days.add(day);
+		if (!days.contains(day)) {
+			setNewValues(day);
+			days.add(day);
+		}
 	}
 
 	private void changeSeveralDays() {
 		if (!checkInterval()) {
-			Notification.addMessage("", "Начальная дата больше конечной");
+			Notification.addMessage("factory_calendar_edit_form:date_error", "Начальная дата больше конечной");
 			return;
 		}
 
-		LocalDate tempDate = newToDate;
+		LocalDate tempDate = newFromDate;
 		do {
 			Day day = dr.find(tempDate);
 			setNewValues(day);
 			days.add(day);
 			tempDate = tempDate.plusDays(1);
-		} while (tempDate.equals(newToDate));
+		} while (tempDate.isBefore(newToDate) || tempDate.isEqual(newToDate));
 	}
 
 	private void setNewValues(Day day) {
-		day.setType(newType);
+		if (newType != null)
+			day.setType(newType);
 		day.setDescription(newDescription);
 	}
 
 	private boolean checkInterval() {
-		return newFromDate.isAfter(newToDate);
+		return newFromDate.isBefore(newToDate);
 	}
 
 	// *****************************************************************************************************************
@@ -135,12 +153,8 @@ public class FactoryCalendarEditDialogController implements Serializable {
 		this.newType = newType;
 	}
 
-	public Set<Day> getDays() {
+	public List<Day> getDays() {
 		return days;
-	}
-
-	public void setDays(Set<Day> days) {
-		this.days = days;
 	}
 
 }

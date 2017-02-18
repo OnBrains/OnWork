@@ -13,38 +13,77 @@
             <div class="row">
                 <div class="col-xs-6">
                     <h:outputLabel for="from" value="Дни для редактирования:" styleClass="small"/>
-                    <inf:datetimePicker id="from" value="#{dayEditDC.newFromDate}" selectMode="days"
+                    <inf:datetimePicker id="from" value="#{factoryCalendarEditDC.newFromDate}" selectMode="days"
                                         showClear="true" showClose="true" required="true" requiredMessage="Обязательно для заполнения"/>
                     <div class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:from:from"/></div>
                 </div>
 
-                <h:panelGroup id="test">
+                <h:panelGroup id="to_date_panel">
                     <div class="col-xs-6">
-                        <div class="input-group">
+                        <div class="input-group pt-30px">
                             <span class="input-group-btn">
-                                <h:commandLink action="#{dayEditDC.toggleIntervalMode()}" class="btn btn-secondary">
-                                    <f:ajax execute="@this" render="test"/>
-                                    <inf:icon value="#{dayEditDC.interval ? 'fa-close' : 'fa-check'}"/>
+                                <h:commandLink action="#{factoryCalendarEditDC.toggleIntervalMode()}" class="btn btn-secondary" title="Указать интервал">
+                                    <f:ajax execute="@this" render="to_date_panel"/>
+                                    <inf:icon value="#{factoryCalendarEditDC.interval ? 'fa-close' : 'fa-check'}"/>
                                 </h:commandLink>
                             </span>
-                            <inf:datetimePicker id="to" value="#{dayEditDC.newToDate}" selectMode="days" disabled="#{not dayEditDC.interval}"
-                                                showClear="true" showClose="true" required="true" requiredMessage="Обязательно для заполнения"/>
+                            <inf:datetimePicker id="to" value="#{factoryCalendarEditDC.newToDate}" selectMode="days" disabled="#{not factoryCalendarEditDC.interval}"
+                                                showClear="true" showClose="true" required="#{factoryCalendarEditDC.interval}" requiredMessage="Обязательно для заполнения"/>
                         </div>
-                        <div class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:from:from"/></div>
+                        <div class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:to:to"/></div>
                     </div>
                 </h:panelGroup>
             </div>
+
+            <h:panelGroup id="date_error" class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:date_error"/></h:panelGroup>
+
+            <div class="row">
+                <div class="col-xs-4">
+                    <h:outputLabel for="day_type" value="Новый тип:" styleClass="small"/>
+                    <h:selectOneMenu id="day_type" value="#{factoryCalendarEditDC.newType}" styleClass="custom-select w-100">
+                        <f:selectItem itemValue=""/>
+                        <f:selectItems value="#{factoryCalendarEditDC.types}" var="dt" itemValue="#{dt}" itemLabel="#{dt.objectName}"/>
+                    </h:selectOneMenu>
+                </div>
+
+                <div class="col-xs-8">
+                    <h:outputLabel for="description" value="Описание:" styleClass="small"/>
+                    <h:inputTextarea id="description" value="#{factoryCalendarEditDC.newDescription}"  styleClass="form-control"/>
+                </div>
+            </div>
+        </div>
+
+        <div style="height: 200px; overflow-y: auto;">
+            <h:dataTable id="changing_days" value="#{factoryCalendarEditDC.days}" var="day" styleClass="table">
+                <h:column>
+                    <h:outputText value="#{day.value}"/>
+                </h:column>
+
+                <h:column>
+                    <h:outputText value="#{day.type.objectName}"/>
+                </h:column>
+
+                <h:column>
+                    <h:outputText value="#{day.description}"/>
+                </h:column>
+            </h:dataTable>
         </div>
     </ui:define>
 
     <ui:define name="dlg-footer">
-        <h:commandLink action="#{dayEditDC.submit()}" styleClass="btn btn-success mr-1">
+        <h:commandLink action="#{factoryCalendarEditDC.change()}" styleClass="btn btn-success" style="float: left;">
+            <inf:icon value="fa-plus"/>
+            <span>Добавить</span>
+            <f:ajax execute="@form" render="@form"/>
+        </h:commandLink>
+
+        <h:commandLink action="#{factoryCalendarEditDC.submit()}" styleClass="btn btn-success mr-1">
             <inf:icon value="fa-check"/>
             <span>Сохранить</span>
             <f:ajax execute="@form" render="@form #{update}"/>
         </h:commandLink>
 
-        <h:commandLink action="#{dayEditDC.cancel()}" onclick="$(#{dlgId}).modal('hide');" styleClass="btn btn-danger">
+        <h:commandLink action="#{factoryCalendarEditDC.cancel()}" onclick="$(#{dlgId}).modal('hide');" styleClass="btn btn-danger">
             <inf:icon value="fa-close"/>
             <span>Отмена</span>
             <f:ajax execute="@this" render="@form"/>
