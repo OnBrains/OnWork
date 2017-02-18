@@ -16,9 +16,9 @@ import org.onbrains.onwork.env.day.model.Day;
 import org.onbrains.onwork.env.day.model.DayType;
 import org.onbrains.onwork.util.Notification;
 
-@Named(value = "dayEditDC")
+@Named(value = "factoryCalendarEditDC")
 @ViewScoped
-public class DayEditDialogController implements Serializable {
+public class FactoryCalendarEditDialogController implements Serializable {
 
 	private static final long serialVersionUID = -5449565836973567500L;
 

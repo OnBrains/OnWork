@@ -28,7 +28,7 @@
 
     <!-- Welcome page -->
     <welcome-file-list>
-        <welcome-file>/views/env/day/DayDirectoryView.xhtml</welcome-file>
+        <welcome-file>/views/env/day/FactoryCalendarView.xhtml</welcome-file>
     </welcome-file-list>
 
     <servlet>

@@ -19,7 +19,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <h3>
-                                <h:outputText id="panel_header" value="#{dateFormat.toMMMMMYYYY(dayDirectoryVM.selectedMonth)}"/>
+                                <h:outputText id="panel_header" value="#{dateFormat.toMMMMMYYYY(factoryCalendarVM.selectedMonth)}"/>
                             </h3>
                         </div>
 
@@ -35,12 +35,12 @@
                                     <i class="fa fa-pencil fa-lg text-area"></i>
                                 </h:commandLink>
 
-                                <h:commandLink styleClass="btn float-lg-right" action="#{dayDirectoryVM.nextMonth()}">
+                                <h:commandLink styleClass="btn float-lg-right" action="#{factoryCalendarVM.nextMonth()}">
                                     <i class="fa fa-chevron-right fa-lg text-success"></i>
                                     <f:ajax execute="@this" render="days_table panel_header"/>
                                 </h:commandLink>
 
-                                <h:commandLink styleClass="btn float-lg-right" action="#{dayDirectoryVM.previousMonth()}">
+                                <h:commandLink styleClass="btn float-lg-right" action="#{factoryCalendarVM.previousMonth()}">
                                     <f:ajax execute="@this" render="days_table panel_header"/>
                                     <i class="fa fa-chevron-left fa-lg text-success"></i>
                                 </h:commandLink>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
 
-                <h:dataTable id="days_table" value="#{dayDirectoryVM.days}" var="day" styleClass="table">
+                <h:dataTable id="days_table" value="#{factoryCalendarVM.days}" var="day" styleClass="table">
 
                     <h:column width="5%">
                         <div class="text-xs-center">
@@ -80,7 +80,7 @@
             <ui:param name="update" value="day_directory_form"/>
         </ui:include>
 
-        <ui:include src="DayEditDialog.xhtml">
+        <ui:include src="FactoryCalendarEditDialog.xhtml">
             <ui:param name="dlgId" value="factory_calendar_edit_dlg"/>
             <ui:param name="dlgFormId" value="factory_calendar_edit_form"/>
             <ui:param name="update" value="day_directory_form"/>

@@ -14,9 +14,9 @@ import javax.inject.Named;
 
 import org.onbrains.onwork.env.day.model.Day;
 
-@Named(value = "dayDirectoryVM")
+@Named(value = "factoryCalendarVM")
 @ViewScoped
-public class DayDirectoryViewModel implements Serializable {
+public class FactoryCalendarViewModel implements Serializable {
 
 	private static final long serialVersionUID = 8985101951746767877L;
 
