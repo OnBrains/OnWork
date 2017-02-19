@@ -68,7 +68,7 @@
     </ui:define>
 
     <ui:define name="dlg-footer">
-        <h:commandLink action="#{dlgController.submit()}" styleClass="btn btn-success mr-1">
+        <h:commandLink action="#{dlgController.submit(dlgId)}" styleClass="btn btn-success mr-1">
             <inf:icon value="fa-check"/>
             <span>#{dlgController.getSubmitButtonLabel()}</span>
             <f:ajax execute="@form" render="@form #{update}"/>

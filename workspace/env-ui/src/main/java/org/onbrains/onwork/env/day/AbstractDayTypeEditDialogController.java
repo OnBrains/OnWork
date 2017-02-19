@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import org.onbrains.onwork.env.day.model.AbstractDayType;
 import org.onbrains.onwork.util.Callback;
 import org.onbrains.onwork.util.EditDialogController;
+import org.onbrains.onwork.util.OmnifacesUtils;
 
 /**
  * Created on 27.11.2016 18:37.
@@ -32,11 +33,14 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 	private String description;
 
 	@Override
-	public void submit() {
+	public void submit(String dlgId) {
 		if (!isEditMode())
 			create();
 		else
 			update();
+
+		cancel();
+		OmnifacesUtils.closeDlg(dlgId);
 	}
 
 	@Override

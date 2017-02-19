@@ -27,7 +27,7 @@ public interface EditDialogController<T extends Identifiable> {
 	/**
 	 * Реализация метода должна создавать новый объект или изменять существующий в зависимости от
 	 */
-	void submit();
+	void submit(String dlgId);
 
 	void cancel();
 
