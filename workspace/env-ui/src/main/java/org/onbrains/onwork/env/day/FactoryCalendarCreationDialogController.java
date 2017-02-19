@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.onbrains.onwork.util.Notification;
+import org.onbrains.onwork.util.OmnifacesUtils;
 
 @Named(value = "factoryCalendarCreationDC")
 @RequestScoped
@@ -20,26 +21,29 @@ public class FactoryCalendarCreationDialogController implements Serializable {
 
 	private Year newYear;
 
-	public void create() {
+	public void create(String dlgId) {
 		if (isYearHaveDays()) {
 			Notification.addMessage("factory_calendar_creation_form:year:year",
 					"Для данного года уже заведён производственный календарь");
 			return;
 		}
 		dr.createDays(newYear);
+
+		cancel();
+		OmnifacesUtils.closeDlg(dlgId);
 	}
 
 	public void cancel() {
 		newYear = null;
 	}
 
-	public boolean isYearHaveDays() {
-		return dr.countDaysOf(newYear) != 0;
-	}
-
 	// *****************************************************************************************************************
 	// Private methods
 	// *****************************************************************************************************************
+
+	private boolean isYearHaveDays() {
+		return dr.countDaysOf(newYear) != 0;
+	}
 
 	// *****************************************************************************************************************
 	// Simple getters and setters

@@ -1,11 +1,8 @@
 package org.onbrains.onwork.env.day;
 
-import static org.onbrains.onwork.env.day.model.DayType.HOLIDAY;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -33,7 +30,7 @@ public class FactoryCalendarViewModel implements Serializable {
 	}
 
 	public List<Day> getDays() {
-		if (days == null)
+		if (days == null || days.isEmpty())
 			days = dr.findDaysOf(selectedMonth);
 		return days;
 	}
@@ -48,8 +45,8 @@ public class FactoryCalendarViewModel implements Serializable {
 		days = null;
 	}
 
-	public String getStyleClassForRow(Day day) {
-		return day != null && !Objects.equals(HOLIDAY, day.getType().getId()) ? "" : "holiday";
+	public Runnable getChangedCallback() {
+		return () -> days = null;
 	}
 
 	// *****************************************************************************************************************

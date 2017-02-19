@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import org.onbrains.onwork.env.day.model.Day;
 import org.onbrains.onwork.env.day.model.DayType;
 import org.onbrains.onwork.util.Notification;
+import org.onbrains.onwork.util.OmnifacesUtils;
 
 @Named(value = "factoryCalendarEditDC")
 @ViewScoped
@@ -32,6 +33,8 @@ public class FactoryCalendarEditDialogController implements Serializable {
 	@Inject
 	private DayTypeRepository dtr;
 
+	private Runnable changedCallback;
+
 	private Boolean interval = false;
 
 	private LocalDate newFromDate;
@@ -43,8 +46,12 @@ public class FactoryCalendarEditDialogController implements Serializable {
 	private List<Day> days = new ArrayList<>();
 
 	@Transactional
-	public void submit() {
+	public void submit(String dlgId) {
 		days.forEach(day -> em.merge(day));
+		changedCallback.run();
+
+		cancel();
+		OmnifacesUtils.closeDlg(dlgId);
 	}
 
 	public void change() {
@@ -53,6 +60,7 @@ public class FactoryCalendarEditDialogController implements Serializable {
 		else
 			changeSeveralDays();
 
+		clear();
 		Collections.sort(days, (d1, d2) -> d1.getValue().compareTo(d2.getValue()));
 	}
 
@@ -61,11 +69,7 @@ public class FactoryCalendarEditDialogController implements Serializable {
 	}
 
 	public void cancel() {
-		interval = false;
-		newFromDate = null;
-		newToDate = null;
-		newDescription = null;
-		newType = null;
+		clear();
 		days.clear();
 	}
 
@@ -113,9 +117,25 @@ public class FactoryCalendarEditDialogController implements Serializable {
 		return newFromDate.isBefore(newToDate);
 	}
 
+	private void clear() {
+		interval = false;
+		newFromDate = null;
+		newToDate = null;
+		newDescription = null;
+		newType = null;
+	}
+
 	// *****************************************************************************************************************
 	// Simple getters and setters
 	// *****************************************************************************************************************
+
+	public Runnable getChangedCallback() {
+		return changedCallback;
+	}
+
+	public void setChangedCallback(Runnable changedCallback) {
+		this.changedCallback = changedCallback;
+	}
 
 	public Boolean getInterval() {
 		return interval;

@@ -17,57 +17,69 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-sm-8">
                             <h3>
                                 <h:outputText id="panel_header" value="#{dateFormat.toMMMMMYYYY(factoryCalendarVM.selectedMonth)}"/>
                             </h3>
                         </div>
 
-                        <div class="col-md-4">
-                            <div class="btn-group float-lg-right" role="group">
-                                <h:commandLink styleClass="btn float-lg-right" onclick="showDlg('factory_calendar_creation_dlg')">
+                        <div class="col-sm-4">
+                            <div class="float-lg-right" >
+                                <h:commandLink styleClass="btn" action="#{factoryCalendarVM.previousMonth()}">
                                     <f:ajax execute="@this" render="days_table panel_header"/>
-                                    <i class="fa fa-cog fa-lg text-area"></i>
+                                    <inf:icon value="fa-chevron-left" styleClass="fa-lg text-success"/>
                                 </h:commandLink>
 
-                                <h:commandLink styleClass="btn float-lg-right" onclick="showDlg('factory_calendar_edit_dlg')">
-                                    <f:ajax execute="@this" render="days_table panel_header"/>
-                                    <i class="fa fa-pencil fa-lg text-area"></i>
-                                </h:commandLink>
-
-                                <h:commandLink styleClass="btn float-lg-right" action="#{factoryCalendarVM.nextMonth()}">
-                                    <i class="fa fa-chevron-right fa-lg text-success"></i>
+                                <h:commandLink styleClass="btn" action="#{factoryCalendarVM.nextMonth()}">
+                                    <inf:icon value="fa-chevron-right" styleClass="fa-lg text-success"/>
                                     <f:ajax execute="@this" render="days_table panel_header"/>
                                 </h:commandLink>
 
-                                <h:commandLink styleClass="btn float-lg-right" action="#{factoryCalendarVM.previousMonth()}">
-                                    <f:ajax execute="@this" render="days_table panel_header"/>
-                                    <i class="fa fa-chevron-left fa-lg text-success"></i>
-                                </h:commandLink>
+                                <inf:dropdownMenu id="manage_menu">
+                                    <h:commandLink styleClass="dropdown-item" onclick="showDlg('factory_calendar_creation_dlg')">
+                                        <span> Создать</span>
+                                        <f:ajax execute="@this" render="days_table panel_header"/>
+                                    </h:commandLink>
+
+                                    <h:commandLink styleClass="dropdown-item" onclick="showDlg('factory_calendar_edit_dlg')">
+                                        <span> Редактировать</span>
+                                        <f:ajax execute="@this" render="days_table panel_header"/>
+                                        <f:setPropertyActionListener value="#{factoryCalendarVM.changedCallback}" target="#{factoryCalendarEditDC.changedCallback}"/>
+                                    </h:commandLink>
+                                </inf:dropdownMenu>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <h:dataTable id="days_table" value="#{factoryCalendarVM.days}" var="day" styleClass="table">
+                <div id="days_table_container" style="overflow-y: auto;">
 
-                    <h:column width="5%">
-                        <div class="text-xs-center">
-                            <inf:icon value="#{day.type.icon}" style="color: #{day.type.iconColor}" styleClass="fa-lg"/>
-                        </div>
-                    </h:column>
+                    <script>
+                        $( document ).ready(function() {
+                            computeHeight('days_table_container', 30);
+                        });
+                    </script>
 
-                    <h:column width="35%">
-                        <f:facet name="header">День</f:facet>
-                        <h:outputText value="#{dateFormat.toDDEE(day.value).toLowerCase()}"/>
-                    </h:column>
+                    <h:dataTable id="days_table" value="#{factoryCalendarVM.days}" var="day" styleClass="table">
 
-                    <h:column width="60%">
-                        <f:facet name="header">Описание</f:facet>
-                        <h:outputText value="#{day.description}"/>
-                    </h:column>
+                        <h:column width="5%">
+                            <div class="text-xs-center">
+                                <inf:icon value="#{day.type.icon}" style="color: #{day.type.iconColor}" styleClass="fa-lg"/>
+                            </div>
+                        </h:column>
 
-                </h:dataTable>
+                        <h:column width="35%">
+                            <f:facet name="header">День</f:facet>
+                            <h:outputText value="#{dateFormat.toDDEE(day.value).toLowerCase()}"/>
+                        </h:column>
+
+                        <h:column width="60%">
+                            <f:facet name="header">Описание</f:facet>
+                            <h:outputText value="#{day.description}"/>
+                        </h:column>
+
+                    </h:dataTable>
+                </div>
             </div>
 
         </h:form>
