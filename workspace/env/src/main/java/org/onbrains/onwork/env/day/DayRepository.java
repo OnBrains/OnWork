@@ -7,7 +7,9 @@ import static org.onbrains.onwork.env.day.model.DayType.WORK_DAY;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Year;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -22,11 +24,6 @@ import org.onbrains.onwork.env.sequence.IdSequenceService;
 
 import com.google.common.collect.Lists;
 
-/**
- * Created on 13.11.2016 19:24.
- *
- * @author Oleg Naumov
- */
 @Stateless
 public class DayRepository implements Serializable {
 
@@ -42,6 +39,9 @@ public class DayRepository implements Serializable {
 	@Inject
 	private IdSequenceService idSequence;
 
+	@Inject
+	private DayTypeRepository dtr;
+
 	public void createDays(@NotNull Year year) {
 		LocalDate dayOfYear = LocalDate.of(year.getValue(), 1, 1);
 		LocalDate lastDayOfYear = dayOfYear.with(lastDayOfYear());
@@ -55,6 +55,7 @@ public class DayRepository implements Serializable {
 			create(dayOfYear, type);
 			dayOfYear = dayOfYear.plusDays(1);
 		}
+		markSpecialDays(year);
 	}
 
 	public List<Day> findDaysOf(LocalDate month) {
@@ -86,6 +87,64 @@ public class DayRepository implements Serializable {
 
 		em.persist(day);
 		return day;
+	}
+
+	private void markSpecialDays(Year year) {
+		DayType festival = em.find(DayType.class, DayType.FESTIVAL);
+
+		Arrays.stream(SpecialDay.values()).forEach(sd -> {
+			Day day = find(LocalDate.of(year.getValue(), sd.getMonth(), sd.getDayOfMonth()));
+			day.setType(festival);
+			day.setDescription(sd.getDescription());
+			em.merge(day);
+		});
+	}
+
+	// *****************************************************************************************************************
+	// Inner classes
+	// *****************************************************************************************************************
+
+	private enum SpecialDay {
+
+		//@formatter:off
+		FIRST_JAN 			(Month.JANUARY, 1, "День новогодних каникул"),
+		SECOND_JAN 			(Month.JANUARY, 2, "День новогодних каникул"),
+		THIRD_JAN 			(Month.JANUARY, 3, "День новогодних каникул"),
+		FOURTH_JAN 			(Month.JANUARY, 4, "День новогодних каникул"),
+		FIFTH_JAN 			(Month.JANUARY, 5, "День новогодних каникул"),
+		SIXTH_JAN 			(Month.JANUARY, 6, "День новогодних каникул"),
+		SEVENTH_JAN 		(Month.JANUARY, 7, "Православное Рождество"),
+		EIGHTH_JAN 			(Month.JANUARY, 8, "День новогодних каникул"),
+		TWENTY_THIRD_FEB 	(Month.FEBRUARY, 23, "День защитника Отечества"),
+		EIGHTH_MAR 			(Month.MARCH, 8, "Международный женский день"),
+		FIRST_MAY 			(Month.MAY, 1, "Праздник Весны и Труда"),
+		NINTH_MAY 			(Month.MAY, 9, "День победы"),
+		TWELFTH_JUN 		(Month.JUNE, 12, "День России"),
+		FOURTH_NOV 			(Month.NOVEMBER, 4, "День народного единства");
+		//@formatter:on
+
+		private Month month;
+		private int dayOfMonth;
+		private String description;
+
+		SpecialDay(Month month, int dayOfMonth, String description) {
+			this.month = month;
+			this.dayOfMonth = dayOfMonth;
+			this.description = description;
+		}
+
+		public Month getMonth() {
+			return month;
+		}
+
+		public int getDayOfMonth() {
+			return dayOfMonth;
+		}
+
+		public String getDescription() {
+			return description;
+		}
+
 	}
 
 }
