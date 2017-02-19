@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import org.onbrains.onwork.env.event.model.AbstractEventType;
 import org.onbrains.onwork.util.Callback;
 import org.onbrains.onwork.util.EditDialogController;
+import org.onbrains.onwork.util.OmnifacesUtils;
 
 /**
  * Абстрактная реализация диалога создания/редактирования типов событий.
@@ -34,11 +35,14 @@ public abstract class AbstractEventTypeEditDialogController<T extends AbstractEv
 	private String description;
 
 	@Override
-	public void submit() {
+	public void submit(String dlgId) {
 		if (!isEditMode())
 			create();
 		else
 			update();
+
+		cancel();
+		OmnifacesUtils.closeDlg(dlgId);
 	}
 
 	@Override
