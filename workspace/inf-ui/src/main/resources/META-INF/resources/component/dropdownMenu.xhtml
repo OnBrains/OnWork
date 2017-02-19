@@ -1,0 +1,25 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:cc="http://java.sun.com/jsf/composite">
+
+    <cc:interface name="dropdownMenu">
+        <cc:attribute name="value" type="java.lang.String"/>
+        <cc:attribute name="id" type="java.lang.String" required="true"/>
+        <cc:attribute name="icon" type="java.lang.String" default="fa-cog"/>
+        <cc:attribute name="style" type="java.lang.String"/>
+        <cc:attribute name="styleClass" type="java.lang.String" default="fa-lg"/>
+    </cc:interface>
+
+    <cc:implementation>
+        <div class="dropdown" style="display: inline;">
+            <a class="btn fa #{cc.attrs.icon} #{cc.attrs.styleClass}" href="#" id="#{cc.attrs.id}" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false" style="#{cc.attrs.style}">
+                #{cc.attrs.value}
+            </a>
+
+            <div class="dropdown-menu" aria-labelledby="#{cc.attrs.id}">
+                <cc:insertChildren/>
+            </div>
+        </div>
+    </cc:implementation>
+
+</ui:component>
