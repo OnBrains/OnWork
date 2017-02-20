@@ -1,0 +1,107 @@
+<ui:composition template="/views/inf/page/View.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:inf="http://onbrains.org/onwork/inf">
+
+    <ui:define name="header">
+        <title>Рабочий журнал</title>
+    </ui:define>
+
+    <ui:define name="pagePath">
+        <li class="breadcrumb-item">Справочники</li>
+        <li class="breadcrumb-item active">Рабочий журнал</li>
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form id="work_journal_form">
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h3>
+                                <h:outputText id="panel_header" value="#{dateFormat.toMMMMMYYYY(workJournalVC.selectedMonth)}"/>
+                            </h3>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="float-lg-right" >
+                                <h:commandLink styleClass="btn" action="#{workJournalVC.previousMonth()}">
+                                    <f:ajax execute="@this" render="work_journal_table panel_header"/>
+                                    <inf:icon value="fa-chevron-left" styleClass="fa-lg text-success"/>
+                                </h:commandLink>
+
+                                <h:commandLink styleClass="btn" action="#{workJournalVC.nextMonth()}">
+                                    <inf:icon value="fa-chevron-right" styleClass="fa-lg text-success"/>
+                                    <f:ajax execute="@this" render="work_journal_table panel_header"/>
+                                </h:commandLink>
+
+                                <inf:dropdownMenu id="manage_menu">
+                                    <h:commandLink styleClass="dropdown-item" onclick="showDlg('work_journal_creation_dlg')">
+                                        <span>Создать</span>
+                                        <f:ajax execute="@this" render="work_journal_table"/>
+                                    </h:commandLink>
+
+                                    <!--<h:commandLink styleClass="dropdown-item" onclick="showDlg('factory_calendar_edit_dlg')">-->
+                                        <!--<span>Редактировать</span>-->
+                                        <!--<f:ajax execute="@this" render="work_journal_table panel_header"/>-->
+                                        <!--<f:setPropertyActionListener value="#{factoryCalendarVC.changedCallback}" target="#{factoryCalendarEditDC.changedCallback}"/>-->
+                                    <!--</h:commandLink>-->
+                                </inf:dropdownMenu>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="work_journal_container" style="overflow-y: auto;">
+
+                    <script>
+                        $( document ).ready(function() {
+                            computeHeight('work_journal_container', 30);
+                        });
+                    </script>
+
+                    <h:dataTable id="work_journal_table" value="#{workJournalVC.workDays}" var="workDay" styleClass="table">
+
+                        <h:column width="5%">
+                            <div class="text-xs-center">
+                                <inf:icon value="#{workDay.type.icon}" title="#{workDay.typeDescription}"
+                                          style="color: #{workDay.type.iconColor}" styleClass="fa-lg"/>
+                            </div>
+                        </h:column>
+
+                        <h:column width="15%">
+                            <f:facet name="header">День</f:facet>
+                            <h:outputText value="#{dateFormat.toDDEE(workDay.day.value).toLowerCase()}"/>
+                        </h:column>
+
+                        <h:column width="10%">
+                            <f:facet name="header">Начало</f:facet>
+                            <h:outputText value="#{workDay.comingTime}"/>
+                        </h:column>
+
+                        <h:column width="10%">
+                            <f:facet name="header">Окончание</f:facet>
+                            <h:outputText value="#{workDay.outTime}"/>
+                        </h:column>
+
+                        <h:column width="60%">
+                            <f:facet name="header">Описание</f:facet>
+                            <h:outputText value="#{workDay.description}"/>
+                        </h:column>
+
+                    </h:dataTable>
+                </div>
+            </div>
+
+        </h:form>
+    </ui:define>
+
+    <ui:define name="dialogs">
+        <ui:include src="WorkJournalCreationDialog.xhtml">
+            <ui:param name="dlgId" value="work_journal_creation_dlg"/>
+            <ui:param name="dlgFormId" value="work_journal_creation_form"/>
+            <ui:param name="update" value="work_journal_form"/>
+        </ui:include>
+    </ui:define>
+
+</ui:composition>

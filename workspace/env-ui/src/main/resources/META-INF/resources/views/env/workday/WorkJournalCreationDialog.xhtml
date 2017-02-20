@@ -1,0 +1,32 @@
+<ui:composition template="/views/inf/page/DialogFrame.xhtml" xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:inf="http://onbrains.org/onwork/inf">
+
+    <ui:define name="dlg-title">
+        <h3>
+            <h:outputText value="Заведение журнала"/>
+        </h3>
+    </ui:define>
+
+    <ui:define name="dlg-body">
+        <h:outputLabel for="month" value="Выберите месяц:" styleClass="small"/>
+        <inf:datetimePicker id="month" value="#{workJournalCreationDC.newMonth}" selectMode="months"
+                            showClear="true" showClose="true" required="true" requiredMessage="Обязательно для заполнения"/>
+        <div class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:month:month"/></div>
+    </ui:define>
+
+    <ui:define name="dlg-footer">
+        <h:commandLink action="#{workJournalCreationDC.create(dlgId)}" styleClass="btn btn-success mr-1">
+            <inf:icon value="fa-check"/>
+            <span>Создать</span>
+            <f:ajax execute="@form" render="@form #{update}"/>
+        </h:commandLink>
+
+        <h:commandLink action="#{workJournalCreationDC.cancel()}" onclick="$(#{dlgId}).modal('hide');" styleClass="btn btn-danger">
+            <inf:icon value="fa-close"/>
+            <span>Отмена</span>
+            <f:ajax execute="@this" render="@form"/>
+        </h:commandLink>
+    </ui:define>
+
+</ui:composition>

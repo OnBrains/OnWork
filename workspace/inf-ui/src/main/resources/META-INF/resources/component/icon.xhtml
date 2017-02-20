@@ -3,12 +3,13 @@
 
     <cc:interface name="icon">
         <cc:attribute name="value" type="java.lang.String" required="true"/>
+        <cc:attribute name="title" type="java.lang.String"/>
         <cc:attribute name="style" type="java.lang.String"/>
         <cc:attribute name="styleClass" type="java.lang.String"/>
     </cc:interface>
 
     <cc:implementation>
-        <i class="fa #{cc.attrs.value} #{cc.attrs.styleClass}" style="#{cc.attrs.style}"></i>
+        <i class="fa #{cc.attrs.value} #{cc.attrs.styleClass}" style="#{cc.attrs.style}" title="#{cc.attrs.title}"></i>
     </cc:implementation>
 
 </ui:component>

@@ -11,7 +11,7 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(value = "MonthConverter")
 public class MonthConverter implements Converter {
 
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MMM. yyyy");
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("LLL yyyy");
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
