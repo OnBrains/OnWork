@@ -1,6 +1,6 @@
 package org.onbrains.onwork.env.workday.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -10,6 +10,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -26,28 +28,42 @@ import org.onbrains.onwork.inf.modelbase.BusinessObject;
 @Entity
 @Access(AccessType.FIELD)
 @Table(schema = "system", name = "work_day")
+//@formatter:off
+@NamedQueries({
+		@NamedQuery(name = WorkDay.COUNT_WORK_DAYS_OF_MONTH, query = "select count(*) from WorkDay wd where to_char(wd.day.value, 'yyyy-MM') = :month and wd.employee = :employee"),
+		@NamedQuery(name = WorkDay.FIND_WORK_DAYS_OF_MONTH, query = "select wd from WorkDay wd where to_char(wd.day.value, 'yyyy-MM') = :month and wd.employee = :employee"),
+		@NamedQuery(name = WorkDay.FIND_WORK_DAY, query = "select wd from WorkDay wd where wd.day.value = :date and wd.employee = :employee")
+})
+//@formatter:on
 public class WorkDay extends BusinessObject {
 
 	private static final long serialVersionUID = -6333728186740111484L;
 
+	public static final String COUNT_WORK_DAYS_OF_MONTH = "countWorkDaysOfMonth";
+	public static final String FIND_WORK_DAYS_OF_MONTH = "WorkDayRepository.findWorkDaysOf";
+	public static final String FIND_WORK_DAY = "WorkDayRepository.findWorkDay";
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private Employee employee;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private Day day;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	private AbstractDayType type;
 
 	@Column(name = "coming_time")
-	private LocalDateTime comingTime;
+	private LocalTime comingTime;
 
 	@Column(name = "out_time")
-	private LocalDateTime outTime;
+	private LocalTime outTime;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 32)
 	private WorkDayState state;
+
+	@Column(length = 512)
+	private String description;
 
 	@Version
 	private Long version;
@@ -57,6 +73,10 @@ public class WorkDay extends BusinessObject {
 
 	public WorkDay(Long id) {
 		super(id);
+	}
+
+	public String getTypeDescription() {
+		return day.getDescription() == null ? type.getObjectName() : day.getDescription();
 	}
 
 	@Override
@@ -92,19 +112,19 @@ public class WorkDay extends BusinessObject {
 		this.type = type;
 	}
 
-	public LocalDateTime getComingTime() {
+	public LocalTime getComingTime() {
 		return comingTime;
 	}
 
-	public void setComingTime(LocalDateTime comingTime) {
+	public void setComingTime(LocalTime comingTime) {
 		this.comingTime = comingTime;
 	}
 
-	public LocalDateTime getOutTime() {
+	public LocalTime getOutTime() {
 		return outTime;
 	}
 
-	public void setOutTime(LocalDateTime outTime) {
+	public void setOutTime(LocalTime outTime) {
 		this.outTime = outTime;
 	}
 
@@ -114,6 +134,14 @@ public class WorkDay extends BusinessObject {
 
 	public void setState(WorkDayState state) {
 		this.state = state;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

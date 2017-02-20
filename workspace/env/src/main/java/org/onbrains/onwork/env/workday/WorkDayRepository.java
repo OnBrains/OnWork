@@ -1,9 +1,13 @@
 package org.onbrains.onwork.env.workday;
 
+import static java.lang.Long.valueOf;
+import static org.onbrains.onwork.env.workday.model.WorkDay.FIND_WORK_DAY;
+import static org.onbrains.onwork.env.workday.model.WorkDay.FIND_WORK_DAYS_OF_MONTH;
 import static org.onbrains.onwork.env.workday.model.WorkDayState.NO_WORK;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -18,18 +22,10 @@ import org.onbrains.onwork.env.employee.model.Employee;
 import org.onbrains.onwork.env.sequence.IdSequenceService;
 import org.onbrains.onwork.env.workday.model.WorkDay;
 
-/**
- * Created on 13.11.2016 20:09.
- *
- * @author Oleg Naumov
- */
 @Stateless
 public class WorkDayRepository implements Serializable {
 
 	private static final long serialVersionUID = 3535783851569041034L;
-
-	private static final String FIND_WORK_DAYS_OF_MONTH = "WorkDayRepository.findWorkDaysOf";
-	private static final String FIND_WORK_DAY = "WorkDayRepository.findWorkDay";
 
 	@Inject
 	private EntityManager em;
@@ -40,7 +36,7 @@ public class WorkDayRepository implements Serializable {
 	@Inject
 	private DayRepository dr;
 
-	public void createWorkDays(@NotNull LocalDate month, @NotNull Employee employee) {
+	public void createWorkDays(@NotNull YearMonth month, @NotNull Employee employee) {
 		List<Day> daysOfMonth = dr.findDaysOf(month);
 		daysOfMonth.forEach(day -> create(day, employee));
 	}
@@ -54,9 +50,14 @@ public class WorkDayRepository implements Serializable {
 		}
 	}
 
-	public List<WorkDay> findWorkDaysOf(@NotNull LocalDate month, @NotNull Employee employee) {
+	public List<WorkDay> findWorkDaysOf(@NotNull YearMonth month, @NotNull Employee employee) {
 		return em.createNamedQuery(FIND_WORK_DAYS_OF_MONTH, WorkDay.class).setParameter("employee", employee)
-				.setParameter("month", month).getResultList();
+				.setParameter("month", month.toString()).getResultList();
+	}
+
+	public long countWorkDaysOf(YearMonth month, @NotNull Employee employee) {
+		return valueOf(em.createNamedQuery(WorkDay.COUNT_WORK_DAYS_OF_MONTH).setParameter("month", month.toString())
+				.setParameter("employee", employee).getSingleResult().toString());
 	}
 
 	// *****************************************************************************************************************
