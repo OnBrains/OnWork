@@ -9,11 +9,6 @@ import javax.persistence.Version;
 
 import org.onbrains.onwork.inf.modelbase.BusinessObject;
 
-/**
- * Created on 13.11.2016 17:44.
- *
- * @author Oleg Naumov
- */
 @Entity
 @Access(AccessType.FIELD)
 @Table(schema = "system")
