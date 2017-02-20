@@ -3,12 +3,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:inf="http://onbrains.org/onwork/inf">
 
     <ui:define name="header">
-        <title>Справочник дней</title>
+        <title>Производственный календарь</title>
     </ui:define>
 
     <ui:define name="pagePath">
         <li class="breadcrumb-item">Справочники</li>
-        <li class="breadcrumb-item active">Календарь</li>
+        <li class="breadcrumb-item active">Производственный календарь</li>
     </ui:define>
 
     <ui:define name="body">
@@ -19,32 +19,32 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <h3>
-                                <h:outputText id="panel_header" value="#{dateFormat.toMMMMMYYYY(factoryCalendarVM.selectedMonth)}"/>
+                                <h:outputText id="panel_header" value="#{dateFormat.toMMMMMYYYY(factoryCalendarVC.selectedMonth)}"/>
                             </h3>
                         </div>
 
                         <div class="col-sm-4">
                             <div class="float-lg-right" >
-                                <h:commandLink styleClass="btn" action="#{factoryCalendarVM.previousMonth()}">
+                                <h:commandLink styleClass="btn" action="#{factoryCalendarVC.previousMonth()}">
                                     <f:ajax execute="@this" render="days_table panel_header"/>
                                     <inf:icon value="fa-chevron-left" styleClass="fa-lg text-success"/>
                                 </h:commandLink>
 
-                                <h:commandLink styleClass="btn" action="#{factoryCalendarVM.nextMonth()}">
+                                <h:commandLink styleClass="btn" action="#{factoryCalendarVC.nextMonth()}">
                                     <inf:icon value="fa-chevron-right" styleClass="fa-lg text-success"/>
                                     <f:ajax execute="@this" render="days_table panel_header"/>
                                 </h:commandLink>
 
                                 <inf:dropdownMenu id="manage_menu">
                                     <h:commandLink styleClass="dropdown-item" onclick="showDlg('factory_calendar_creation_dlg')">
-                                        <span> Создать</span>
-                                        <f:ajax execute="@this" render="days_table panel_header"/>
+                                        <span>Создать</span>
+                                        <f:ajax execute="@this" render="days_table"/>
                                     </h:commandLink>
 
                                     <h:commandLink styleClass="dropdown-item" onclick="showDlg('factory_calendar_edit_dlg')">
-                                        <span> Редактировать</span>
-                                        <f:ajax execute="@this" render="days_table panel_header"/>
-                                        <f:setPropertyActionListener value="#{factoryCalendarVM.changedCallback}" target="#{factoryCalendarEditDC.changedCallback}"/>
+                                        <span>Редактировать</span>
+                                        <f:ajax execute="@this" render="days_table"/>
+                                        <f:setPropertyActionListener value="#{factoryCalendarVC.changedCallback}" target="#{factoryCalendarEditDC.changedCallback}"/>
                                     </h:commandLink>
                                 </inf:dropdownMenu>
                             </div>
@@ -60,7 +60,7 @@
                         });
                     </script>
 
-                    <h:dataTable id="days_table" value="#{factoryCalendarVM.days}" var="day" styleClass="table">
+                    <h:dataTable id="days_table" value="#{factoryCalendarVC.days}" var="day" styleClass="table">
 
                         <h:column width="5%">
                             <div class="text-xs-center">

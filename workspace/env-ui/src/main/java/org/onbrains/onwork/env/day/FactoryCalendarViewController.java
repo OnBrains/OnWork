@@ -1,7 +1,7 @@
 package org.onbrains.onwork.env.day;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -20,13 +20,13 @@ public class FactoryCalendarViewController implements Serializable {
 	@Inject
 	private DayRepository dr;
 
-	private LocalDate selectedMonth;
+	private YearMonth selectedMonth;
 
 	private List<Day> days;
 
 	@PostConstruct
 	protected void postConstruct() {
-		selectedMonth = LocalDate.now();
+		selectedMonth = YearMonth.now();
 	}
 
 	public List<Day> getDays() {
@@ -53,7 +53,7 @@ public class FactoryCalendarViewController implements Serializable {
 	// Simple getters and setters
 	// *****************************************************************************************************************
 
-	public LocalDate getSelectedMonth() {
+	public YearMonth getSelectedMonth() {
 		return selectedMonth;
 	}
 

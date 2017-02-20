@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
+import java.time.YearMonth;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,11 +59,12 @@ public class DayRepository implements Serializable {
 		markSpecialDays(year);
 	}
 
-	public List<Day> findDaysOf(LocalDate month) {
-		return em.createNamedQuery(Day.FIND_DAYS_OF_MONTH, Day.class).setParameter("month", month).getResultList();
+	public List<Day> findDaysOf(@NotNull YearMonth month) {
+		return em.createNamedQuery(Day.FIND_DAYS_OF_MONTH, Day.class).setParameter("month", month.toString())
+				.getResultList();
 	}
 
-	public Day find(LocalDate date) {
+	public Day find(@NotNull LocalDate date) {
 		try {
 			return em.createNamedQuery(Day.FIND_DAY, Day.class).setParameter("date", date).getSingleResult();
 		} catch (NoResultException ex) {
@@ -70,7 +72,7 @@ public class DayRepository implements Serializable {
 		}
 	}
 
-	public long countDaysOf(Year year) {
+	public long countDaysOf(@NotNull Year year) {
 		return Long.valueOf(em.createNamedQuery(Day.COUNT_DAYS_OF_YEAR).setParameter("year", year.toString())
 				.getSingleResult().toString());
 	}

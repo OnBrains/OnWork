@@ -24,7 +24,7 @@ import org.onbrains.onwork.inf.modelbase.BusinessObject;
 @Table(schema = "system")
 //@formatter:off
 @NamedQueries({
-		@NamedQuery(name = Day.FIND_DAYS_OF_MONTH, query = "select d from Day d where to_char(d.value, 'yyyyMM') = to_char(cast(:month as date), 'yyyyMM') order by d.value"),
+		@NamedQuery(name = Day.FIND_DAYS_OF_MONTH, query = "select d from Day d where to_char(d.value, 'yyyy-MM') = :month order by d.value"),
 		@NamedQuery(name = Day.COUNT_DAYS_OF_YEAR, query = "select count(*) from Day d where to_char(d.value, 'yyyy') =  :year"),
 		@NamedQuery(name = Day.FIND_DAY, query = "select d from Day d where d.value = :date")
 })

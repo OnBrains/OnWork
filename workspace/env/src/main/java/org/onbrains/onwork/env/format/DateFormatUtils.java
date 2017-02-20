@@ -2,6 +2,7 @@ package org.onbrains.onwork.env.format;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoField;
@@ -49,6 +50,12 @@ public class DateFormatUtils implements Serializable {
 		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
 				.appendText(ChronoField.MONTH_OF_YEAR, MONTH_NAME_MAP).appendPattern(" yyyy").toFormatter();
 		return date != null ? formatter.format(date) : null;
+	}
+
+	public static String toMMMMMYYYY(YearMonth yearMonth) {
+		DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+				.appendText(ChronoField.MONTH_OF_YEAR, MONTH_NAME_MAP).appendPattern(" yyyy").toFormatter();
+		return yearMonth != null ? formatter.format(yearMonth) : null;
 	}
 
 }
