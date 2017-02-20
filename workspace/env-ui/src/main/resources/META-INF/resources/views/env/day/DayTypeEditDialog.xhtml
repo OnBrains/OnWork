@@ -32,10 +32,10 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-xs-6">
-                    <h:outputLabel for="icon" value="Иконка" styleClass="small"/>
+                    <h:outputLabel for="icon" value="Иконка:" styleClass="small"/>
                     <div id="icon_input" class="input-group icon_input">
                         <h:inputText id="icon" value="#{dlgController.icon}" styleClass="form-control" data-placement="bottomRight"/>
-                        <div class="input-group-addon pr-26px"></div>
+                        <span class="input-group-addon width-41px"></span>
                     </div>
 
                     <script>
@@ -49,7 +49,7 @@
                     <h:outputLabel for="icon_color" value="Цвет:" styleClass="small"/>
                     <div id="icon_color_input" class="input-group icon_color_input">
                         <h:inputText id="icon_color" value="#{dlgController.iconColor}" styleClass="form-control"/>
-                        <div class="input-group-addon pr-26px"><i class="mt-2px"></i></div>
+                        <span class="input-group-addon pb-7px"><i class="mt-2px"></i></span>
                     </div>
 
                     <script>

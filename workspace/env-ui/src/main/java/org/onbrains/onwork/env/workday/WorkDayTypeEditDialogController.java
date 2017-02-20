@@ -25,7 +25,7 @@ public class WorkDayTypeEditDialogController extends AbstractDayTypeEditDialogCo
 	@Override
 	protected void update() {
 		super.update();
-		setEditableObject(wdtr.merge(getEditableObject()));
+		em.merge(getEditableObject());
 	}
 
 }

@@ -4,17 +4,13 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.onbrains.onwork.env.day.model.AbstractDayType;
 import org.onbrains.onwork.util.Callback;
 import org.onbrains.onwork.util.EditDialogController;
 import org.onbrains.onwork.util.OmnifacesUtils;
 
-/**
- * Created on 27.11.2016 18:37.
- *
- * @author Oleg Naumov
- */
 public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayType>
 		implements EditDialogController<T>, Serializable {
 
@@ -33,6 +29,7 @@ public abstract class AbstractDayTypeEditDialogController<T extends AbstractDayT
 	private String description;
 
 	@Override
+	@Transactional
 	public void submit(String dlgId) {
 		if (!isEditMode())
 			create();

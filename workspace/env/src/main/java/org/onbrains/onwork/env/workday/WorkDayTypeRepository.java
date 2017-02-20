@@ -1,24 +1,23 @@
 package org.onbrains.onwork.env.workday;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 
 import org.onbrains.onwork.env.sequence.IdSequenceService;
 import org.onbrains.onwork.env.workday.model.WorkDayType;
-import org.onbrains.onwork.inf.dataaccess.utils.BusinessObjectRepository;
 
-/**
- * Created on 24.11.2016 19:48.
- *
- * @author Oleg Naumov
- */
 @Stateless
-public class WorkDayTypeRepository extends BusinessObjectRepository<WorkDayType> {
+public class WorkDayTypeRepository implements Serializable {
 
 	private static final long serialVersionUID = 4079194095310216641L;
+
+	@Inject
+	private EntityManager em;
 
 	@Inject
 	private IdSequenceService iss;
