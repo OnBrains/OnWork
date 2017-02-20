@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 import org.onbrains.onwork.env.event.model.AbstractEventType;
 import org.onbrains.onwork.util.Callback;
@@ -35,6 +36,7 @@ public abstract class AbstractEventTypeEditDialogController<T extends AbstractEv
 	private String description;
 
 	@Override
+	@Transactional
 	public void submit(String dlgId) {
 		if (!isEditMode())
 			create();

@@ -11,7 +11,7 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(value = "TimeConverter")
 public class TimeConverter implements Converter {
 
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH24:mm");
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
 
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {

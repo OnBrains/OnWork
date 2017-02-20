@@ -1,5 +1,7 @@
 package org.onbrains.onwork.env.event.model;
 
+import java.time.LocalTime;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
@@ -22,7 +24,7 @@ public class FixedTimeEventType extends AbstractEventType {
 	public static final String FIND_ALL = "FixedTimeEventType.findAll";
 
 	@Column(name = "fixed_time")
-	private Long fixedTime;
+	private LocalTime fixedTime;
 
 	protected FixedTimeEventType() {
 	}
@@ -40,11 +42,11 @@ public class FixedTimeEventType extends AbstractEventType {
 	// Simple getters and setters
 	// *****************************************************************************************************************
 
-	public Long getFixedTime() {
+	public LocalTime getFixedTime() {
 		return fixedTime;
 	}
 
-	public void setFixedTime(Long fixedTime) {
+	public void setFixedTime(LocalTime fixedTime) {
 		this.fixedTime = fixedTime;
 	}
 

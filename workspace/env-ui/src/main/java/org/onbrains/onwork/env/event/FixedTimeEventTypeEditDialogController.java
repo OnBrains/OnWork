@@ -1,8 +1,9 @@
 package org.onbrains.onwork.env.event;
 
+import java.time.LocalTime;
+
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.transaction.Transactional;
 
 import org.onbrains.onwork.env.event.model.FixedTimeEventType;
 
@@ -13,12 +14,11 @@ import org.onbrains.onwork.env.event.model.FixedTimeEventType;
  */
 @Named(value = "fixedTimeEventTypeEditDC")
 @ViewScoped
-@Transactional
 public class FixedTimeEventTypeEditDialogController extends AbstractEventTypeEditDialogController<FixedTimeEventType> {
 
 	private static final long serialVersionUID = -7089744567493995290L;
 
-	private Long fixedTime;
+	private LocalTime fixedTime;
 
 	@Override
 	protected void create() {
@@ -50,11 +50,11 @@ public class FixedTimeEventTypeEditDialogController extends AbstractEventTypeEdi
 	// Simple getters and setters
 	// *****************************************************************************************************************
 
-	public Long getFixedTime() {
+	public LocalTime getFixedTime() {
 		return fixedTime;
 	}
 
-	public void setFixedTime(Long fixedTime) {
+	public void setFixedTime(LocalTime fixedTime) {
 		this.fixedTime = fixedTime;
 	}
 

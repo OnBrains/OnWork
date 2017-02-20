@@ -18,12 +18,11 @@
                     <div class="form-control-feedback small text-danger"><h:message for="name"/></div>
                 </div>
 
-                <!--TODO: вводить время и конвертировать его в long-->
                 <ui:fragment rendered="#{withFixedTime}">
                     <div class="col-xs-3">
                         <h:outputLabel for="fixed_time" value="Время:" styleClass="small"/>
-                        <h:inputText id="fixed_time" value="#{dlgController.fixedTime}" styleClass="form-control" required="true"
-                                     requiredMessage="Обязательно для заполнения" disabled="#{!dlgController.canEdit()}"/>
+                        <inf:datetimePicker id="fixed_time" value="#{dlgController.fixedTime}" selectMode="time" disabled="#{!dlgController.canEdit()}"
+                                            showClear="true" showClose="true" required="true" requiredMessage="Обязательно для заполнения"/>
                         <div class="form-control-feedback small text-danger"><h:message for="fixed_time"/></div>
                     </div>
                 </ui:fragment>
@@ -33,10 +32,10 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-xs-6">
-                    <h:outputLabel for="icon" value="Иконка" styleClass="small"/>
+                    <h:outputLabel for="icon" value="Иконка:" styleClass="small"/>
                     <div id="icon_input" class="input-group icon_input">
                         <h:inputText id="icon" value="#{dlgController.icon}" styleClass="form-control" data-placement="bottomRight"/>
-                        <div class="input-group-addon pr-26px"></div>
+                        <div class="input-group-addon width-41px"></div>
                     </div>
 
                     <script>
@@ -50,7 +49,7 @@
                     <h:outputLabel for="icon_color" value="Цвет:" styleClass="small"/>
                     <div id="icon_color_input" class="input-group icon_color_input">
                         <h:inputText id="icon_color" value="#{dlgController.iconColor}" styleClass="form-control"/>
-                        <div class="input-group-addon pr-26px"><i class="mt-2px"></i></div>
+                        <div class="input-group-addon pb-7px"><i class="mt-2px"></i></div>
                     </div>
 
                     <script>

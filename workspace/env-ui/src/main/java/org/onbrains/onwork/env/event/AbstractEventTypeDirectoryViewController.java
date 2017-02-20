@@ -1,6 +1,7 @@
 package org.onbrains.onwork.env.event;
 
 import java.io.Serializable;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -35,9 +36,13 @@ public abstract class AbstractEventTypeDirectoryViewController<T extends Abstrac
 
 	@Transactional
 	public void remove(T type) {
-		// TODO: деактивировать если используется
 		types.remove(type);
-		em.remove(em.merge(type));
+		try {
+			em.remove(em.merge(type));
+		} catch (ConcurrentModificationException ex) {
+			type.setActive(false);
+			em.merge(type);
+		}
 	}
 
 }

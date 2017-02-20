@@ -1,6 +1,7 @@
 package org.onbrains.onwork.env.event;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -53,7 +54,7 @@ public class EventTypeRepository implements Serializable {
 		return instance;
 	}
 
-	public FixedTimeEventType createFixedTimeEventType(@NotNull String name, @NotNull Long fixedTime, String icon,
+	public FixedTimeEventType createFixedTimeEventType(@NotNull String name, @NotNull LocalTime fixedTime, String icon,
 			String iconColor, String description) {
 		FixedTimeEventType instance = new FixedTimeEventType(iss.nextValue(FixedTimeEventType.class));
 
