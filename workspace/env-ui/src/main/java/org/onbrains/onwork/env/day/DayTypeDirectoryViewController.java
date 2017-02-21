@@ -25,7 +25,7 @@ public class DayTypeDirectoryViewController extends AbstractDayTypeDirectoryView
 	@Override
 	public List<DayType> getTypes() {
 		if (types == null) {
-			types = dtr.findAll();
+			types = dtr.findAllCalendarTypes();
 		}
 		return types;
 	}

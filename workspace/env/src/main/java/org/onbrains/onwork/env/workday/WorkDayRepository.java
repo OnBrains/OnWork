@@ -41,7 +41,7 @@ public class WorkDayRepository implements Serializable {
 		daysOfMonth.forEach(day -> create(day, employee));
 	}
 
-	public WorkDay findWorkDay(@NotNull LocalDate date, @NotNull Employee employee) {
+	public WorkDay find(@NotNull LocalDate date, @NotNull Employee employee) {
 		try {
 			return em.createNamedQuery(FIND_WORK_DAY, WorkDay.class).setParameter("employee", employee)
 					.setParameter("date", date).getSingleResult();

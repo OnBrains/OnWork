@@ -41,7 +41,7 @@ public class WorkDay extends BusinessObject {
 
 	public static final String COUNT_WORK_DAYS_OF_MONTH = "countWorkDaysOfMonth";
 	public static final String FIND_WORK_DAYS_OF_MONTH = "WorkDayRepository.findWorkDaysOf";
-	public static final String FIND_WORK_DAY = "WorkDayRepository.findWorkDay";
+	public static final String FIND_WORK_DAY = "WorkDayRepository.find";
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private Employee employee;

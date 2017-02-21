@@ -8,12 +8,12 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @Access(AccessType.FIELD)
-@NamedQueries({ @NamedQuery(name = DayType.FIND_ALL, query = "from DayType") })
+@NamedQueries({ @NamedQuery(name = DayType.FIND_ALL_CALENDAR_TYPES, query = "from DayType") })
 public class DayType extends AbstractDayType {
 
 	private static final long serialVersionUID = -4536998624025275478L;
 
-	public static final String FIND_ALL = "DayType.findAll";
+	public static final String FIND_ALL_CALENDAR_TYPES = "DayType.findAllCalendarTypes";
 
 	public static final long WORK_DAY = 1;
 	public static final long HOLIDAY = 2;

@@ -1,0 +1,130 @@
+<ui:composition template="/views/inf/page/DialogFrame.xhtml" xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:inf="http://onbrains.org/onwork/inf">
+
+	<ui:define name="dlg-title">
+		<h3>
+			<h:outputText value="Редактирование журнала"/>
+		</h3>
+	</ui:define>
+
+	<ui:define name="dlg-body">
+		<ui:fragment rendered="#{workJournalEditDC.editableWorkDay eq null}">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-xs-6">
+						<h:outputLabel for="from" value="Дни для редактирования:" styleClass="small"/>
+						<inf:datetimePicker id="from" value="#{workJournalEditDC.newFromDate}" selectMode="days"
+											showClear="true" showClose="true" required="true" requiredMessage="Обязательно для заполнения"/>
+						<div class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:from:from"/></div>
+					</div>
+
+					<h:panelGroup id="to_date_panel">
+						<div class="col-xs-6">
+							<div class="input-group pt-30px">
+								<span class="input-group-btn">
+									<h:commandLink action="#{workJournalEditDC.toggleIntervalMode()}" class="btn btn-secondary" title="Указать интервал">
+										<f:ajax execute="@this" render="to_date_panel"/>
+										<inf:icon value="#{workJournalEditDC.interval ? 'fa-close' : 'fa-check'}"/>
+									</h:commandLink>
+								</span>
+								<inf:datetimePicker id="to" value="#{workJournalEditDC.newToDate}" selectMode="days" disabled="#{not workJournalEditDC.interval}"
+													showClear="true" showClose="true" required="#{workJournalEditDC.interval}" requiredMessage="Обязательно для заполнения"/>
+							</div>
+							<div class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:to:to"/></div>
+						</div>
+					</h:panelGroup>
+				</div>
+
+				<h:panelGroup id="date_error" class="form-control-feedback small text-danger"><h:message for="#{dlgFormId}:date_error"/></h:panelGroup>
+
+				<div class="row">
+					<div class="col-xs-4">
+						<h:outputLabel for="day_type" value="Новый тип:" styleClass="small"/>
+						<h:selectOneMenu id="day_type" value="#{workJournalEditDC.newType}" styleClass="custom-select w-100">
+							<f:selectItem itemValue=""/>
+							<f:selectItems value="#{workJournalEditDC.types}" var="dt" itemValue="#{dt}" itemLabel="#{dt.objectName}"/>
+						</h:selectOneMenu>
+					</div>
+
+					<div class="col-xs-8">
+						<h:outputLabel for="description" value="Описание:" styleClass="small"/>
+						<h:inputTextarea id="description" value="#{workJournalEditDC.newDescription}"  styleClass="form-control"/>
+					</div>
+				</div>
+			</div>
+
+			<div style="height: 200px; overflow-y: auto;">
+				<h:dataTable id="changing_days" value="#{workJournalEditDC.workDays}" var="workDay" styleClass="table">
+					<h:column>
+						<h:outputText value="#{workDay.day.value}"/>
+					</h:column>
+
+					<h:column>
+						<h:outputText value="#{workDay.type.objectName}"/>
+					</h:column>
+
+					<h:column>
+						<h:outputText value="#{workDay.description}"/>
+					</h:column>
+				</h:dataTable>
+			</div>
+		</ui:fragment>
+
+		<ui:fragment rendered="#{workJournalEditDC.editableWorkDay ne null}">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-xs-6">
+						<h:outputLabel for="old_from" value="Дни для редактирования:" styleClass="small"/>
+						<inf:datetimePicker id="old_from" value="#{workJournalEditDC.editableWorkDay.day.value}" selectMode="days"
+											showClear="true" showClose="true" required="true" requiredMessage="Обязательно для заполнения"
+											disabled="true"/>
+					</div>
+
+					<div class="col-xs-6">
+						<h:outputLabel for="old_day_type" value="Новый тип:" styleClass="small"/>
+						<h:selectOneMenu id="old_day_type" value="#{workJournalEditDC.editableWorkDay.type}" styleClass="custom-select w-100">
+
+							<f:ajax render="@this"/>
+
+							<f:selectItem itemValue=""/>
+							<f:selectItems value="#{workJournalEditDC.types}" var="dt" itemValue="#{dt}" itemLabel="#{dt.objectName}"/>
+						</h:selectOneMenu>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<h:outputLabel for="old_description" value="Описание:" styleClass="small"/>
+						<h:inputTextarea id="old_description" value="#{workJournalEditDC.editableWorkDay.description}"
+										 styleClass="form-control">
+							<f:ajax render="@this"/>
+						</h:inputTextarea>
+					</div>
+				</div>
+			</div>
+		</ui:fragment>
+	</ui:define>
+
+	<ui:define name="dlg-footer">
+		<h:commandLink action="#{workJournalEditDC.change()}" styleClass="btn btn-success float-sm-left"
+					   rendered="#{workJournalEditDC.editableWorkDay eq null}">
+			<inf:icon value="fa-plus"/>
+			<span>Добавить</span>
+			<f:ajax execute="@form" render="@form"/>
+		</h:commandLink>
+
+		<h:commandLink action="#{workJournalEditDC.submit(dlgId)}" styleClass="btn btn-success mr-1">
+			<inf:icon value="fa-check"/>
+			<span>Сохранить</span>
+			<f:ajax render="@form #{update}"/>
+		</h:commandLink>
+
+		<h:commandLink action="#{workJournalEditDC.cancel()}" onclick="$(#{dlgId}).modal('hide');" styleClass="btn btn-danger">
+			<inf:icon value="fa-close"/>
+			<span>Отмена</span>
+			<f:ajax execute="@this"/>
+		</h:commandLink>
+	</ui:define>
+
+</ui:composition>

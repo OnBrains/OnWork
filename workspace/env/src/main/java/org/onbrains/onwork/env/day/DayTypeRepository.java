@@ -8,14 +8,10 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.validation.constraints.NotNull;
 
+import org.onbrains.onwork.env.day.model.AbstractDayType;
 import org.onbrains.onwork.env.day.model.DayType;
 import org.onbrains.onwork.env.sequence.IdSequenceService;
 
-/**
- * Created on 24.11.2016 19:59.
- *
- * @author Oleg Naumov
- */
 @Stateless
 public class DayTypeRepository implements Serializable {
 
@@ -40,8 +36,12 @@ public class DayTypeRepository implements Serializable {
 		return dayType;
 	}
 
-	public List<DayType> findAll() {
-		return em.createNamedQuery(DayType.FIND_ALL, DayType.class).getResultList();
+	public List<AbstractDayType> findAll() {
+		return em.createNamedQuery(AbstractDayType.FIND_ALL, AbstractDayType.class).getResultList();
+	}
+
+	public List<DayType> findAllCalendarTypes() {
+		return em.createNamedQuery(DayType.FIND_ALL_CALENDAR_TYPES, DayType.class).getResultList();
 	}
 
 }

@@ -7,7 +7,7 @@
     </ui:define>
 
     <ui:define name="pagePath">
-        <li class="breadcrumb-item">Справочники</li>
+        <li class="breadcrumb-item">Учёт времени</li>
         <li class="breadcrumb-item active">Рабочий журнал</li>
     </ui:define>
 
@@ -41,11 +41,11 @@
                                         <f:ajax execute="@this" render="work_journal_table"/>
                                     </h:commandLink>
 
-                                    <!--<h:commandLink styleClass="dropdown-item" onclick="showDlg('factory_calendar_edit_dlg')">-->
-                                        <!--<span>Редактировать</span>-->
-                                        <!--<f:ajax execute="@this" render="work_journal_table panel_header"/>-->
-                                        <!--<f:setPropertyActionListener value="#{factoryCalendarVC.changedCallback}" target="#{factoryCalendarEditDC.changedCallback}"/>-->
-                                    <!--</h:commandLink>-->
+                                    <h:commandLink styleClass="dropdown-item" onclick="showDlg('work_journal_edit_dlg')">
+                                        <span>Редактировать</span>
+                                        <f:ajax execute="@this" render="work_journal_table work_journal_edit_form"/>
+                                        <f:setPropertyActionListener value="#{workJournalVC.changedCallback}" target="#{workJournalEditDC.changedCallback}"/>
+                                    </h:commandLink>
                                 </inf:dropdownMenu>
                             </div>
                         </div>
@@ -71,7 +71,11 @@
 
                         <h:column width="15%">
                             <f:facet name="header">День</f:facet>
-                            <h:outputText value="#{dateFormat.toDDEE(workDay.day.value).toLowerCase()}"/>
+                            <h:commandLink value="#{dateFormat.toDDEE(workDay.day.value).toLowerCase()}" onclick="showDlg('work_journal_edit_dlg')">
+                                <f:ajax execute="@this" render="work_journal_edit_form"/>
+                                <f:setPropertyActionListener value="#{workDay}" target="#{workJournalEditDC.editableWorkDay}"/>
+                                <f:setPropertyActionListener value="#{workJournalVC.changedCallback}" target="#{workJournalEditDC.changedCallback}"/>
+                            </h:commandLink>
                         </h:column>
 
                         <h:column width="10%">
@@ -100,6 +104,12 @@
         <ui:include src="WorkJournalCreationDialog.xhtml">
             <ui:param name="dlgId" value="work_journal_creation_dlg"/>
             <ui:param name="dlgFormId" value="work_journal_creation_form"/>
+            <ui:param name="update" value="work_journal_form"/>
+        </ui:include>
+
+        <ui:include src="WorkJournalEditDialog.xhtml">
+            <ui:param name="dlgId" value="work_journal_edit_dlg"/>
+            <ui:param name="dlgFormId" value="work_journal_edit_form"/>
             <ui:param name="update" value="work_journal_form"/>
         </ui:include>
     </ui:define>

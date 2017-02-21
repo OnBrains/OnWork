@@ -14,7 +14,7 @@ public class EntityManagerUtils implements Serializable {
 
 	private static final long serialVersionUID = 6963476283283930527L;
 
-	private static final Pattern SERIALIZED_FORMAT = Pattern.compile("(.*)\\[id=([0-9])+\\]");
+	private static final Pattern SERIALIZED_FORMAT = Pattern.compile("^([a-zA-Z\\.]+)\\[id=([0-9]+)\\]$");
 
 	@Inject
 	private EntityManager em;

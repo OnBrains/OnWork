@@ -4,24 +4,24 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
 import org.onbrains.onwork.inf.modelbase.BusinessDirectory;
 
-/**
- * Created on 27.11.2016 17:50.
- *
- * @author Oleg Naumov
- */
 @Entity
 @Access(AccessType.FIELD)
 @Table(schema = "system", name = "day_type", uniqueConstraints = @UniqueConstraint(name = "uc_day_type", columnNames = {
 		"name" }))
+@NamedQueries({ @NamedQuery(name = AbstractDayType.FIND_ALL, query = "select dt from AbstractDayType dt") })
 public abstract class AbstractDayType extends BusinessDirectory {
 
 	private static final long serialVersionUID = -6364999546146433925L;
+
+	public static final String FIND_ALL = "findAll";
 
 	@Column(length = 128, nullable = false)
 	private String name;
