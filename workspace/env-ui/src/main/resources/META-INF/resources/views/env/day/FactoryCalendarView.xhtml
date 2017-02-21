@@ -12,7 +12,7 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:form id="day_directory_form">
+        <h:form id="factory_calendar_form">
 
             <div class="card">
                 <div class="card-header">
@@ -89,13 +89,13 @@
         <ui:include src="FactoryCalendarCreationDialog.xhtml">
             <ui:param name="dlgId" value="factory_calendar_creation_dlg"/>
             <ui:param name="dlgFormId" value="factory_calendar_creation_form"/>
-            <ui:param name="update" value="day_directory_form"/>
+            <ui:param name="update" value="factory_calendar_form"/>
         </ui:include>
 
         <ui:include src="FactoryCalendarEditDialog.xhtml">
             <ui:param name="dlgId" value="factory_calendar_edit_dlg"/>
             <ui:param name="dlgFormId" value="factory_calendar_edit_form"/>
-            <ui:param name="update" value="day_directory_form"/>
+            <ui:param name="update" value="factory_calendar_form"/>
         </ui:include>
     </ui:define>
 

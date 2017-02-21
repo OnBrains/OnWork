@@ -75,7 +75,7 @@ public class FactoryCalendarEditDialogController implements Serializable {
 
 	public List<DayType> getTypes() {
 		if (types == null)
-			types = dtr.findAll();
+			types = dtr.findAllCalendarTypes();
 		return types;
 	}
 
@@ -86,12 +86,16 @@ public class FactoryCalendarEditDialogController implements Serializable {
 	// TODO: change work day that dependent from this day and they types are equals
 	private void changeSingleDay() {
 		Day day = dr.find(newFromDate);
+		if (day == null)
+			return;
+
 		if (!days.contains(day)) {
 			setNewValues(day);
 			days.add(day);
 		}
 	}
 
+	// TODO: call changeSingleDay because now can add several equals days
 	private void changeSeveralDays() {
 		if (!checkInterval()) {
 			Notification.addMessage("factory_calendar_edit_form:date_error", "Начальная дата больше конечной");
@@ -117,6 +121,7 @@ public class FactoryCalendarEditDialogController implements Serializable {
 		return newFromDate.isBefore(newToDate);
 	}
 
+	@SuppressWarnings("Duplicates")
 	private void clear() {
 		interval = false;
 		newFromDate = null;
